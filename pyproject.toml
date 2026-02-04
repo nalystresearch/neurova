@@ -1,0 +1,129 @@
+# copyright (c) 2025 @analytics withharry
+# all rights reserved.
+# licensed under the mit license.
+
+[build-system]
+requires = [
+    "setuptools>=65.0",
+    "wheel",
+    "numpy>=1.19.0,<2.0; python_version<'3.9'",
+    "numpy>=2.0; python_version>='3.9'",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neurova"
+version = "0.0.1"
+description = "Complete computer vision and deep learning toolkit with GPU acceleration"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+authors = [
+    {name = "@analytics withharry", email = "contact@nalystresearch.com"}
+]
+maintainers = [
+    {name = "@analytics withharry", email = "contact@nalystresearch.com"}
+]
+keywords = [
+    "image-processing",
+    "computer-vision",
+    "deep-learning",
+    "neural-networks",
+    "machine-learning",
+    "gpu-acceleration",
+    "cupy",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Typing :: Typed",
+]
+dependencies = [
+    # Core dependencies (always installed)
+    "numpy>=1.19.0,<2.0; python_version<'3.9'",
+    "numpy>=2.0; python_version>='3.9'",
+    "scipy>=1.7.0",
+    "pillow>=9.0.0",
+]
+
+[project.optional-dependencies]
+# Development tools
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+# Documentation
+docs = [
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+]
+# Visualization (matplotlib for plotting)
+viz = [
+    "matplotlib>=3.5.0",
+]
+# GPU acceleration
+gpu = [
+    "cupy>=10.0.0",
+]
+# Full installation (all optional dependencies)
+all = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "matplotlib>=3.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/nalystresearch/neurova"
+Documentation = "https://github.com/nalystresearch/neurova/blob/main/DOCS_INDEX.md"
+Repository = "https://github.com/nalystresearch/neurova"
+"Bug Tracker" = "https://github.com/nalystresearch/neurova/issues"
+Changelog = "https://github.com/nalystresearch/neurova/blob/main/CHANGELOG.md"
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["neurova*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+neurova = ["py.typed", "data/**/*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=neurova --cov-report=html --cov-report=term"

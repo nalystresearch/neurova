@@ -1,0 +1,89 @@
+# copyright (c) 2025 @analytics withharry
+# all rights reserved.
+# licensed under the mit license.
+
+# MobileNetV2 Configuration for Neurova
+
+name: mobilenet_v2
+version: 2.0.0
+framework: onnx
+type: classification
+description: MobileNetV2 1.0 trained on ImageNet
+
+# Model file paths (relative to config file)
+files:
+  onnx: mobilenet_v2.onnx
+  openvino_xml: mobilenet_v2.xml
+  openvino_bin: mobilenet_v2.bin
+  tflite: mobilenet_v2.tflite
+  ncnn_param: mobilenet_v2.param
+  ncnn_bin: mobilenet_v2.bin
+
+# Input specification
+input:
+  name: input
+  shape: [1, 3, 224, 224]
+  dtype: float32
+  format: NCHW
+  color_order: RGB
+
+  # Preprocessing
+  preprocessing:
+    resize:
+      width: 224
+      height: 224
+      interpolation: bilinear
+    normalize:
+      mean: [0.485, 0.456, 0.406]
+      std: [0.229, 0.224, 0.225]
+    scale: 255.0 # Input is divided by this before normalization
+
+# Output specification
+output:
+  - name: output
+    shape: [1, 1000]
+    dtype: float32
+    post_process: softmax
+
+# Class labels
+labels:
+  file: imagenet_labels.txt
+  format: text # text, json, or csv
+  num_classes: 1000
+
+# Performance hints
+performance:
+  flops: 0.3G
+  params: 3.4M
+  recommended_batch_size: 16
+
+# Hardware-specific optimizations
+optimizations:
+  cuda:
+    use_cudnn: true
+    tensor_cores: true
+    precision: fp16
+  opencl:
+    work_group_size: [16, 16]
+  metal:
+    use_mpsgraph: true
+    precision: fp16
+
+# Quantization info (if available)
+quantization:
+  available: true
+  int8:
+    file: mobilenet_v2_int8.onnx
+    calibration: imagenet_calibration.npy
+  fp16:
+    file: mobilenet_v2_fp16.onnx
+
+# Metadata
+metadata:
+  author: Google
+  license: Apache-2.0
+  paper: https://arxiv.org/abs/1801.04381
+  source: torchvision
+  trained_on: ImageNet-1K
+  top1_accuracy: 71.8
+  top5_accuracy: 90.3

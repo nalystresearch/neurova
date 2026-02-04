@@ -1,0 +1,242 @@
+// Neurova Image I/O Protocol Buffer Definitions
+// Image encoding/decoding and video codec specifications
+
+syntax = "proto3";
+
+package neurova.imgcodecs;
+
+option java_package = "ai.neurova.proto.imgcodecs";
+
+// Image color format
+enum ColorFormat {
+    COLOR_UNDEFINED = 0;
+    COLOR_GRAY = 1;
+    COLOR_RGB = 2;
+    COLOR_BGR = 3;
+    COLOR_RGBA = 4;
+    COLOR_BGRA = 5;
+    COLOR_YUV420 = 6;
+    COLOR_YUV422 = 7;
+    COLOR_YUV444 = 8;
+    COLOR_NV12 = 9;
+    COLOR_NV21 = 10;
+    COLOR_YUYV = 11;
+    COLOR_UYVY = 12;
+}
+
+// Image data type
+enum ImageDataType {
+    TYPE_UINT8 = 0;
+    TYPE_UINT16 = 1;
+    TYPE_FLOAT16 = 2;
+    TYPE_FLOAT32 = 3;
+}
+
+// Image compression format
+enum CompressionFormat {
+    COMPRESS_NONE = 0;
+    COMPRESS_JPEG = 1;
+    COMPRESS_PNG = 2;
+    COMPRESS_WEBP = 3;
+    COMPRESS_AVIF = 4;
+    COMPRESS_HEIF = 5;
+    COMPRESS_JXL = 6;
+    COMPRESS_TIFF = 7;
+    COMPRESS_BMP = 8;
+    COMPRESS_EXR = 9;
+    COMPRESS_HDR = 10;
+    COMPRESS_PBM = 11;
+    COMPRESS_JPEG2000 = 12;
+}
+
+// JPEG encoding parameters
+message JpegParams {
+    int32 quality = 1;                // 0-100
+    bool progressive = 2;
+    bool optimize_huffman = 3;
+    int32 restart_interval = 4;
+    string subsampling = 5;           // 444, 422, 420
+    bool arithmetic_coding = 6;
+}
+
+// PNG encoding parameters
+message PngParams {
+    int32 compression_level = 1;      // 0-9
+    string strategy = 2;              // default, filtered, huffman_only, rle, fixed
+    bool interlaced = 3;
+    int32 bit_depth = 4;              // 1, 2, 4, 8, 16
+}
+
+// WebP encoding parameters
+message WebpParams {
+    int32 quality = 1;                // 0-100
+    bool lossless = 2;
+    int32 method = 3;                 // 0-6 (speed/quality tradeoff)
+    float alpha_quality = 4;          // For lossy alpha
+    bool exact = 5;                   // Preserve RGB values in transparent
+}
+
+// AVIF encoding parameters
+message AvifParams {
+    int32 quality = 1;
+    int32 speed = 2;                  // 0-10
+    int32 min_quantizer = 3;
+    int32 max_quantizer = 4;
+    string pixel_format = 5;          // yuv420, yuv444
+    int32 bit_depth = 6;              // 8, 10, 12
+    bool lossless = 7;
+}
+
+// EXR encoding parameters
+message ExrParams {
+    string compression = 1;           // none, rle, zips, zip, piz, pxr24, b44, b44a, dwaa, dwab
+    int32 dwa_compression_level = 2;
+    bool half_float = 3;
+    map<string, string> attributes = 4;
+}
+
+// TIFF encoding parameters
+message TiffParams {
+    string compression = 1;           // none, lzw, deflate, jpeg, packbits
+    int32 jpeg_quality = 2;
+    bool tiled = 3;
+    int32 tile_width = 4;
+    int32 tile_height = 5;
+    bool big_tiff = 6;                // For files > 4GB
+    int32 rows_per_strip = 7;
+}
+
+// Encoding parameters union
+message EncodingParams {
+    CompressionFormat format = 1;
+    
+    oneof params {
+        JpegParams jpeg = 10;
+        PngParams png = 11;
+        WebpParams webp = 12;
+        AvifParams avif = 13;
+        ExrParams exr = 14;
+        TiffParams tiff = 15;
+    }
+}
+
+// Image metadata
+message ImageMetadata {
+    int32 width = 1;
+    int32 height = 2;
+    int32 channels = 3;
+    ColorFormat color_format = 4;
+    ImageDataType data_type = 5;
+    int32 bit_depth = 6;
+    
+    // EXIF-like metadata
+    string camera_make = 10;
+    string camera_model = 11;
+    string datetime = 12;
+    float exposure_time = 13;
+    float f_number = 14;
+    int32 iso_speed = 15;
+    float focal_length = 16;
+    double gps_latitude = 17;
+    double gps_longitude = 18;
+    double gps_altitude = 19;
+    int32 orientation = 20;          // EXIF orientation
+    
+    // Color profile
+    bytes icc_profile = 30;
+    string color_space = 31;         // sRGB, AdobeRGB, ProPhoto, etc.
+    
+    // HDR metadata
+    float display_primaries_rx = 40;
+    float display_primaries_ry = 41;
+    float display_primaries_gx = 42;
+    float display_primaries_gy = 43;
+    float display_primaries_bx = 44;
+    float display_primaries_by = 45;
+    float white_point_x = 46;
+    float white_point_y = 47;
+    float max_luminance = 48;
+    float min_luminance = 49;
+    
+    // Custom metadata
+    map<string, string> custom = 100;
+}
+
+// Decoded image
+message Image {
+    ImageMetadata metadata = 1;
+    bytes data = 2;                   // Raw pixel data
+}
+
+// Multi-page image (TIFF, GIF, etc.)
+message ImageSequence {
+    repeated Image images = 1;
+    repeated int32 delays = 2;        // For animated images (ms)
+    int32 loop_count = 3;             // 0 = infinite
+}
+
+// Video codec types
+enum VideoCodec {
+    CODEC_UNDEFINED = 0;
+    CODEC_H264 = 1;
+    CODEC_H265 = 2;
+    CODEC_VP8 = 3;
+    CODEC_VP9 = 4;
+    CODEC_AV1 = 5;
+    CODEC_MJPEG = 6;
+    CODEC_MPEG4 = 7;
+    CODEC_PRORES = 8;
+    CODEC_RAW = 9;
+}
+
+// Video encoding parameters
+message VideoEncodingParams {
+    VideoCodec codec = 1;
+    int32 bitrate = 2;                // kbps
+    int32 crf = 3;                    // Constant rate factor
+    string preset = 4;                // ultrafast, fast, medium, slow, veryslow
+    string profile = 5;               // baseline, main, high
+    int32 gop_size = 6;               // Keyframe interval
+    int32 b_frames = 7;
+    string pixel_format = 8;          // yuv420p, yuv444p
+    bool two_pass = 9;
+}
+
+// Video container formats
+enum ContainerFormat {
+    CONTAINER_MP4 = 0;
+    CONTAINER_WEBM = 1;
+    CONTAINER_MKV = 2;
+    CONTAINER_AVI = 3;
+    CONTAINER_MOV = 4;
+    CONTAINER_FLV = 5;
+    CONTAINER_OGG = 6;
+}
+
+// Video metadata
+message VideoMetadata {
+    int32 width = 1;
+    int32 height = 2;
+    double fps = 3;
+    int64 frame_count = 4;
+    int64 duration_ms = 5;
+    VideoCodec codec = 6;
+    ContainerFormat container = 7;
+    int32 bitrate = 8;
+    ColorFormat color_format = 9;
+    
+    // HDR info
+    bool is_hdr = 20;
+    string transfer_characteristics = 21;
+    string color_primaries = 22;
+    string matrix_coefficients = 23;
+}
+
+// Video frame
+message VideoFrame {
+    int64 pts = 1;                    // Presentation timestamp
+    int64 dts = 2;                    // Decode timestamp
+    bool keyframe = 3;
+    bytes data = 4;
+    ImageMetadata metadata = 5;
+}

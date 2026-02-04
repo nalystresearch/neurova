@@ -1,0 +1,10 @@
+# Placeholder for Person 2 training images
+# 
+# ADD YOUR FACE IMAGES HERE
+# 
+# Instructions:
+# 1. Add 10-20 face images (JPG/PNG)
+# 2. Make sure face is clearly visible
+# 3. Use different angles and lighting
+# 
+# Or run: python 01_collect_faces.py --name "person_2" --count 20

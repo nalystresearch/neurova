@@ -1,0 +1,13 @@
+# Neurova Object Detection Dataset Config
+# Auto-generated
+
+path: my_detection_dataset
+train: images/train
+val: images/val
+
+# Classes
+names:
+  0: person
+  1: car
+  2: dog
+  3: bicycle

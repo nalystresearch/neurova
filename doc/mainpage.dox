@@ -1,0 +1,355 @@
+/**
+ * @file mainpage.dox
+ * @brief Main documentation page for Neurova C++ API
+ */
+
+/**
+ * @mainpage Neurova C++ API Documentation
+ *
+ * @section intro_sec Introduction
+ *
+ * **Neurova** is a high-performance computer vision and deep learning library
+ * designed as a modern, GPU-accelerated alternative to OpenCV. The library provides
+ * comprehensive image processing, video I/O, and neural network inference
+ * capabilities optimized for both CPUs and GPUs.
+ *
+ * @section features_sec Key Features
+ *
+ * - **GPU Acceleration**: Native CUDA, OpenCL, Metal, and Vulkan backends
+ * - **Modern C++**: C++17/20 with RAII, smart pointers, and ranges
+ * - **Cross-Platform**: Windows, macOS, Linux with unified API
+ * - **Deep Learning**: ONNX, TensorFlow, PyTorch model inference
+ * - **OpenCV Compatible**: Drop-in replacement for easy migration
+ *
+ * @section modules_sec Core Modules
+ *
+ * | Module | Description |
+ * |--------|-------------|
+ * | @ref core | Fundamental data structures and operations |
+ * | @ref imgproc | Image processing functions |
+ * | @ref imgcodecs | Image file I/O |
+ * | @ref videoio | Video capture and writing |
+ * | @ref highgui | GUI and window management |
+ * | @ref dnn | Deep neural network inference |
+ * | @ref features2d | Feature detection and matching |
+ * | @ref calib3d | Camera calibration and 3D |
+ * | @ref objdetect | Object detection |
+ * | @ref ml | Machine learning algorithms |
+ * | @ref cuda | CUDA-specific functions |
+ *
+ * @section quickstart_sec Quick Start
+ *
+ * @subsection cpp_example C++ Example
+ *
+ * @code{.cpp}
+ * #include <neurova/neurova.hpp>
+ *
+ * int main() {
+ *     // Read an image
+ *     nv::Mat img = nv::imread("photo.jpg");
+ *
+ *     // Convert to grayscale
+ *     nv::Mat gray;
+ *     nv::cvtColor(img, gray, nv::COLOR_BGR2GRAY);
+ *
+ *     // Apply Gaussian blur
+ *     nv::Mat blurred;
+ *     nv::GaussianBlur(gray, blurred, nv::Size(5, 5), 1.5);
+ *
+ *     // Detect edges
+ *     nv::Mat edges;
+ *     nv::Canny(blurred, edges, 50, 150);
+ *
+ *     // Display result
+ *     nv::imshow("Edges", edges);
+ *     nv::waitKey(0);
+ *
+ *     return 0;
+ * }
+ * @endcode
+ *
+ * @subsection build_sec Building
+ *
+ * @code{.bash}
+ * mkdir build && cd build
+ * cmake .. -DNEUROVA_WITH_CUDA=ON -DNEUROVA_WITH_OPENCL=ON
+ * cmake --build . --config Release
+ * cmake --install .
+ * @endcode
+ *
+ * @subsection cmake_usage CMake Usage
+ *
+ * @code{.cmake}
+ * find_package(Neurova REQUIRED)
+ * target_link_libraries(myapp PRIVATE Neurova::Neurova)
+ * @endcode
+ *
+ * @section arch_sec Architecture
+ *
+ * @subsection mat_class Mat Class
+ *
+ * The nv::Mat class is the primary data structure for images and arrays:
+ *
+ * @code{.cpp}
+ * // Create an empty 640x480 BGR image
+ * nv::Mat img(480, 640, NV_8UC3);
+ *
+ * // Create with initialization
+ * nv::Mat zeros = nv::Mat::zeros(100, 100, NV_32FC1);
+ * nv::Mat ones = nv::Mat::ones(100, 100, NV_32FC1);
+ * nv::Mat eye = nv::Mat::eye(4, 4, NV_64FC1);
+ *
+ * // Access pixels
+ * nv::Vec3b pixel = img.at<nv::Vec3b>(y, x);
+ * img.at<nv::Vec3b>(y, x) = nv::Vec3b(255, 0, 0);  // Blue
+ *
+ * // ROI (region of interest)
+ * nv::Mat roi = img(nv::Rect(100, 100, 200, 200));
+ * @endcode
+ *
+ * @subsection gpu_usage GPU Acceleration
+ *
+ * Use CUDA for GPU-accelerated operations:
+ *
+ * @code{.cpp}
+ * // Upload to GPU
+ * nv::cuda::GpuMat d_img;
+ * d_img.upload(img);
+ *
+ * // GPU operations
+ * nv::cuda::GpuMat d_gray, d_blurred;
+ * nv::cuda::cvtColor(d_img, d_gray, nv::COLOR_BGR2GRAY);
+ * nv::cuda::GaussianBlur(d_gray, d_blurred, nv::Size(5, 5), 1.5);
+ *
+ * // Download result
+ * nv::Mat result;
+ * d_blurred.download(result);
+ * @endcode
+ *
+ * @subsection dnn_usage Deep Learning Inference
+ *
+ * @code{.cpp}
+ * // Load model
+ * nv::dnn::Net net = nv::dnn::readNet("model.onnx");
+ * net.setPreferableBackend(nv::dnn::DNN_BACKEND_CUDA);
+ * net.setPreferableTarget(nv::dnn::DNN_TARGET_CUDA);
+ *
+ * // Prepare input
+ * nv::Mat blob = nv::dnn::blobFromImage(
+ *     img, 1.0/255.0, nv::Size(640, 640),
+ *     nv::Scalar(), true, false
+ * );
+ *
+ * // Run inference
+ * net.setInput(blob);
+ * nv::Mat output = net.forward();
+ * @endcode
+ *
+ * @section api_ref API Reference by Module
+ *
+ * @subsection core_ref Core Module
+ *
+ * - nv::Mat - N-dimensional dense array
+ * - nv::Point, nv::Point2f, nv::Point3f - 2D/3D points
+ * - nv::Size - 2D size
+ * - nv::Rect - Rectangle
+ * - nv::Scalar - 4-element vector
+ * - nv::Range - Range for slicing
+ * - nv::add(), nv::subtract(), nv::multiply(), nv::divide()
+ * - nv::mean(), nv::sum(), nv::minMaxLoc()
+ *
+ * @subsection imgproc_ref Image Processing
+ *
+ * - nv::cvtColor() - Color space conversion
+ * - nv::GaussianBlur(), nv::blur(), nv::medianBlur()
+ * - nv::Canny(), nv::Sobel(), nv::Laplacian()
+ * - nv::resize(), nv::warpAffine(), nv::warpPerspective()
+ * - nv::threshold(), nv::adaptiveThreshold()
+ * - nv::erode(), nv::dilate(), nv::morphologyEx()
+ * - nv::findContours(), nv::drawContours()
+ * - nv::line(), nv::rectangle(), nv::circle(), nv::putText()
+ *
+ * @subsection dnn_ref Deep Learning
+ *
+ * - nv::dnn::Net - Neural network
+ * - nv::dnn::readNet() - Load any supported model
+ * - nv::dnn::blobFromImage() - Create input blob
+ * - nv::dnn::NMSBoxes() - Non-maximum suppression
+ *
+ * @section compat_sec OpenCV Compatibility
+ *
+ * Neurova provides API compatibility with OpenCV for easy migration:
+ *
+ * | OpenCV | Neurova |
+ * |--------|---------|
+ * | cv::Mat | nv::Mat |
+ * | cv::imread() | nv::imread() |
+ * | cv::imshow() | nv::imshow() |
+ * | cv::cuda::GpuMat | nv::cuda::GpuMat |
+ * | cv::dnn::Net | nv::dnn::Net |
+ *
+ * Migration is typically as simple as changing the namespace:
+ *
+ * @code{.cpp}
+ * // Before (OpenCV)
+ * cv::Mat img = cv::imread("image.jpg");
+ * cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
+ *
+ * // After (Neurova)
+ * nv::Mat img = nv::imread("image.jpg");
+ * nv::cvtColor(img, gray, nv::COLOR_BGR2GRAY);
+ * @endcode
+ *
+ * @section perf_sec Performance
+ *
+ * Neurova is optimized for high performance:
+ *
+ * - **SIMD**: AVX2/AVX-512, NEON acceleration
+ * - **Parallelism**: TBB, OpenMP multi-threading
+ * - **GPU**: CUDA, OpenCL, Metal compute shaders
+ * - **Memory**: Zero-copy operations where possible
+ * - **Caching**: Kernel and plan caching for repeated operations
+ *
+ * @section platform_sec Platform Support
+ *
+ * | Platform | CPU | CUDA | OpenCL | Metal/Vulkan |
+ * |----------|-----|------|--------|--------------|
+ * | Windows x64 | ✓ | ✓ | ✓ | Vulkan |
+ * | macOS x64 | ✓ | ✗ | ✓ | Metal |
+ * | macOS ARM64 | ✓ | ✗ | ✓ | Metal |
+ * | Linux x64 | ✓ | ✓ | ✓ | Vulkan |
+ * | Linux ARM64 | ✓ | ✓ (Jetson) | ✓ | Vulkan |
+ *
+ * @section license_sec License
+ *
+ * Neurova is released under the MIT License. See LICENSE for details.
+ *
+ * @section links_sec Links
+ *
+ * - GitHub: https://github.com/neurova/neurova
+ * - Documentation: https://neurova.readthedocs.io
+ * - PyPI: https://pypi.org/project/neurova/
+ */
+
+/**
+ * @defgroup core Core Module
+ * @brief Core data structures and basic operations
+ *
+ * The Core module provides fundamental classes and functions:
+ * - nv::Mat - The primary n-dimensional array class
+ * - Basic geometric types: Point, Size, Rect, Scalar
+ * - Array operations: arithmetic, comparison, statistics
+ */
+
+/**
+ * @defgroup imgproc Image Processing Module
+ * @brief Image filtering, geometric transforms, and analysis
+ *
+ * Functions for image processing including:
+ * - Color space conversions
+ * - Filtering (blur, edge detection)
+ * - Geometric transformations
+ * - Morphological operations
+ * - Histograms
+ * - Contour analysis
+ * - Drawing functions
+ */
+
+/**
+ * @defgroup imgcodecs Image Codecs Module
+ * @brief Image file reading and writing
+ *
+ * Support for multiple image formats:
+ * - JPEG, PNG, TIFF, BMP
+ * - WebP, AVIF, HEIC
+ * - OpenEXR for HDR
+ * - JPEG 2000
+ */
+
+/**
+ * @defgroup videoio Video I/O Module
+ * @brief Video capture and writing
+ *
+ * Functions for video input/output:
+ * - Camera capture
+ * - Video file reading
+ * - Network streams
+ * - Video writing with codecs
+ */
+
+/**
+ * @defgroup highgui High-level GUI Module
+ * @brief Window management and user interaction
+ *
+ * GUI functions:
+ * - Window creation and management
+ * - Image display
+ * - Trackbars and buttons
+ * - Mouse and keyboard events
+ */
+
+/**
+ * @defgroup dnn Deep Neural Networks Module
+ * @brief Neural network inference
+ *
+ * Deep learning functionality:
+ * - Model loading (ONNX, TensorFlow, Caffe, Darknet)
+ * - Forward inference
+ * - Multiple backends (CPU, CUDA, OpenCL, Vulkan)
+ * - Pre/post processing utilities
+ */
+
+/**
+ * @defgroup features2d 2D Features Module
+ * @brief Feature detection and description
+ *
+ * Feature detection algorithms:
+ * - ORB, SIFT, SURF, AKAZE, BRISK
+ * - Feature matching
+ * - Homography estimation
+ */
+
+/**
+ * @defgroup calib3d Camera Calibration and 3D Module
+ * @brief Camera calibration and stereo vision
+ *
+ * 3D vision functions:
+ * - Camera calibration
+ * - Stereo correspondence
+ * - 3D reconstruction
+ * - Pose estimation
+ */
+
+/**
+ * @defgroup objdetect Object Detection Module
+ * @brief Object detection algorithms
+ *
+ * Detection methods:
+ * - Cascade classifiers
+ * - HOG descriptor
+ * - QR/Barcode detection
+ */
+
+/**
+ * @defgroup ml Machine Learning Module
+ * @brief Classical machine learning algorithms
+ *
+ * ML algorithms:
+ * - SVM
+ * - k-Nearest Neighbors
+ * - Decision Trees
+ * - Random Forests
+ * - Boosting
+ * - Neural Networks (MLP)
+ */
+
+/**
+ * @defgroup cuda CUDA Module
+ * @brief GPU-accelerated functions using CUDA
+ *
+ * CUDA functionality:
+ * - GpuMat for GPU memory
+ * - GPU image processing
+ * - GPU DNN inference
+ * - Memory management
+ */

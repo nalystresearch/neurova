@@ -1,0 +1,287 @@
+// Neurova DNN Graph FlatBuffers Schema
+// Neural network graph serialization
+
+namespace neurova.fb.dnn;
+
+// Include tensor schema
+include "neurova_tensor.fbs";
+
+// Layer operation types
+enum OpType : ushort {
+    // Core
+    Identity = 0,
+    Constant = 1,
+    
+    // Convolution
+    Conv2D = 10,
+    Conv2DTranspose = 11,
+    DepthwiseConv2D = 12,
+    Conv1D = 13,
+    Conv3D = 14,
+    
+    // Pooling
+    MaxPool2D = 20,
+    AvgPool2D = 21,
+    GlobalAvgPool = 22,
+    GlobalMaxPool = 23,
+    AdaptiveAvgPool = 24,
+    
+    // Normalization
+    BatchNorm = 30,
+    LayerNorm = 31,
+    InstanceNorm = 32,
+    GroupNorm = 33,
+    
+    // Activations
+    Relu = 40,
+    Relu6 = 41,
+    LeakyRelu = 42,
+    PRelu = 43,
+    Elu = 44,
+    Selu = 45,
+    Sigmoid = 46,
+    Tanh = 47,
+    Softmax = 48,
+    Softplus = 49,
+    Silu = 50,
+    Gelu = 51,
+    Mish = 52,
+    HardSwish = 53,
+    HardSigmoid = 54,
+    
+    // Linear
+    Dense = 60,
+    Gemm = 61,
+    MatMul = 62,
+    
+    // Shape
+    Reshape = 70,
+    Flatten = 71,
+    Squeeze = 72,
+    Unsqueeze = 73,
+    Transpose = 74,
+    Permute = 75,
+    Concat = 76,
+    Split = 77,
+    Slice = 78,
+    Pad = 79,
+    Gather = 80,
+    
+    // Arithmetic
+    Add = 90,
+    Sub = 91,
+    Mul = 92,
+    Div = 93,
+    Pow = 94,
+    Sqrt = 95,
+    Exp = 96,
+    Log = 97,
+    Abs = 98,
+    Neg = 99,
+    
+    // Comparison
+    Greater = 100,
+    Less = 101,
+    Equal = 102,
+    
+    // Reduction
+    ReduceSum = 110,
+    ReduceMean = 111,
+    ReduceMax = 112,
+    ReduceMin = 113,
+    ReduceProd = 114,
+    
+    // Upsample
+    Upsample = 120,
+    Resize = 121,
+    
+    // Attention
+    MultiHeadAttention = 130,
+    
+    // RNN
+    LSTM = 140,
+    GRU = 141,
+    
+    // Detection
+    NMS = 150,
+    RoiAlign = 151,
+    
+    // Custom
+    Custom = 255
+}
+
+// Padding mode
+enum PadMode : byte {
+    Valid = 0,
+    Same = 1,
+    Explicit = 2
+}
+
+// Interpolation mode
+enum InterpolationMode : byte {
+    Nearest = 0,
+    Bilinear = 1,
+    Bicubic = 2,
+    Area = 3
+}
+
+// Convolution attributes
+table Conv2DAttr {
+    kernel_h: int32 = 3;
+    kernel_w: int32 = 3;
+    stride_h: int32 = 1;
+    stride_w: int32 = 1;
+    pad_h: int32 = 0;
+    pad_w: int32 = 0;
+    dilation_h: int32 = 1;
+    dilation_w: int32 = 1;
+    groups: int32 = 1;
+    pad_mode: PadMode = Valid;
+}
+
+// Pooling attributes
+table PoolAttr {
+    kernel_h: int32 = 2;
+    kernel_w: int32 = 2;
+    stride_h: int32 = 2;
+    stride_w: int32 = 2;
+    pad_h: int32 = 0;
+    pad_w: int32 = 0;
+    ceil_mode: bool = false;
+}
+
+// BatchNorm attributes
+table BatchNormAttr {
+    epsilon: float = 1e-5;
+    momentum: float = 0.1;
+}
+
+// Activation attributes
+table ActivationAttr {
+    alpha: float = 0.01;  // For LeakyRelu
+    beta: float = 1.0;
+    axis: int32 = -1;     // For Softmax
+}
+
+// Reshape attributes
+table ReshapeAttr {
+    shape: [int64];
+}
+
+// Resize attributes
+table ResizeAttr {
+    output_size: [int64];
+    scales: [float];
+    mode: InterpolationMode = Bilinear;
+    align_corners: bool = false;
+}
+
+// Reduce attributes
+table ReduceAttr {
+    axes: [int32];
+    keepdims: bool = true;
+}
+
+// Pad attributes
+table PadAttr {
+    pads: [int64];     // [before_0, before_1, ..., after_0, after_1, ...]
+    value: float = 0;
+    mode: string;      // constant, reflect, edge
+}
+
+// Slice attributes
+table SliceAttr {
+    starts: [int64];
+    ends: [int64];
+    axes: [int64];
+    steps: [int64];
+}
+
+// Concat attributes
+table ConcatAttr {
+    axis: int32 = 0;
+}
+
+// Gemm attributes
+table GemmAttr {
+    alpha: float = 1.0;
+    beta: float = 1.0;
+    trans_a: bool = false;
+    trans_b: bool = false;
+}
+
+// Union of all attributes
+union OpAttr {
+    Conv2DAttr,
+    PoolAttr,
+    BatchNormAttr,
+    ActivationAttr,
+    ReshapeAttr,
+    ResizeAttr,
+    ReduceAttr,
+    PadAttr,
+    SliceAttr,
+    ConcatAttr,
+    GemmAttr
+}
+
+// Graph node (layer)
+table Node {
+    name: string;
+    op_type: OpType;
+    inputs: [string];
+    outputs: [string];
+    attributes: OpAttr;
+    weight_indices: [int32];  // Indices into weight tensor list
+}
+
+// Input/output specification
+table IOSpec {
+    name: string;
+    dtype: neurova.fb.DataType;
+    shape: [int64];
+    dynamic_axes: [int32];    // Which axes can change at runtime
+}
+
+// Preprocessing specification
+table Preprocessing {
+    target_height: int32 = 224;
+    target_width: int32 = 224;
+    mean: [float];
+    std: [float];
+    scale: float = 255.0;
+    color_format: string;     // RGB, BGR
+    data_layout: string;      // NCHW, NHWC
+}
+
+// Neural network graph
+table Graph {
+    name: string;
+    inputs: [IOSpec];
+    outputs: [IOSpec];
+    nodes: [Node];
+    weights: [neurova.fb.Tensor];
+    preprocessing: Preprocessing;
+}
+
+// Model metadata
+table ModelMeta {
+    name: string;
+    version: string;
+    description: string;
+    author: string;
+    license: string;
+    framework: string;
+    custom_data: [ubyte];     // Arbitrary metadata
+}
+
+// Complete model
+table Model {
+    ir_version: int32 = 1;
+    metadata: ModelMeta;
+    graph: Graph;
+}
+
+root_type Model;
+file_identifier "NVDM";
+file_extension "nvmodel";

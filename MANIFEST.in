@@ -1,0 +1,28 @@
+# Manifest for package data
+include README.md
+include LICENSE
+include ARCHITECTURE.md
+include PROJECT_STATUS.md
+include QUICKSTART.md
+
+# Include all Python files
+recursive-include neurova *.py
+
+# Include type stubs
+recursive-include neurova *.pyi
+include neurova/py.typed
+
+# Include data files
+recursive-include neurova/data *
+
+# Exclude test files
+recursive-exclude tests *
+recursive-exclude examples *
+
+# Exclude build artifacts
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude *.so
+global-exclude *.dylib
+global-exclude *~
+global-exclude .DS_Store

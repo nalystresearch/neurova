@@ -1,0 +1,337 @@
+{
+  "version": "1.0.0",
+  "target": "vulkan_1.2",
+  "shaders": [
+    {
+      "name": "conv2d_3x3",
+      "file": "conv2d_3x3.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [8, 8, 8],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "input"
+        },
+        {
+          "binding": 1,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "weights"
+        },
+        {
+          "binding": 2,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "bias"
+        },
+        {
+          "binding": 3,
+          "type": "storage_buffer",
+          "access": "write",
+          "description": "output"
+        }
+      ],
+      "push_constants": {
+        "size": 32,
+        "members": [
+          { "name": "batch_size", "offset": 0, "type": "uint32" },
+          { "name": "in_channels", "offset": 4, "type": "uint32" },
+          { "name": "out_channels", "offset": 8, "type": "uint32" },
+          { "name": "in_height", "offset": 12, "type": "uint32" },
+          { "name": "in_width", "offset": 16, "type": "uint32" },
+          { "name": "stride", "offset": 20, "type": "uint32" },
+          { "name": "padding", "offset": 24, "type": "uint32" },
+          { "name": "groups", "offset": 28, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "conv2d_1x1",
+      "file": "conv2d_1x1.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [8, 8, 8],
+      "description": "Optimized 1x1 convolution (pointwise)"
+    },
+    {
+      "name": "depthwise_conv2d_3x3",
+      "file": "depthwise_conv2d_3x3.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [8, 8, 8],
+      "description": "Depthwise separable convolution"
+    },
+    {
+      "name": "relu",
+      "file": "relu.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1],
+      "bindings": [
+        { "binding": 0, "type": "storage_buffer", "access": "read_write" }
+      ],
+      "push_constants": {
+        "size": 4,
+        "members": [{ "name": "num_elements", "offset": 0, "type": "uint32" }]
+      }
+    },
+    {
+      "name": "relu6",
+      "file": "relu6.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1]
+    },
+    {
+      "name": "leaky_relu",
+      "file": "leaky_relu.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1],
+      "push_constants": {
+        "size": 8,
+        "members": [
+          { "name": "num_elements", "offset": 0, "type": "uint32" },
+          { "name": "negative_slope", "offset": 4, "type": "float32" }
+        ]
+      }
+    },
+    {
+      "name": "silu",
+      "file": "silu.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1],
+      "description": "SiLU / Swish activation"
+    },
+    {
+      "name": "gelu",
+      "file": "gelu.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1]
+    },
+    {
+      "name": "sigmoid",
+      "file": "sigmoid.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1]
+    },
+    {
+      "name": "softmax",
+      "file": "softmax.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1],
+      "bindings": [
+        { "binding": 0, "type": "storage_buffer", "access": "read" },
+        { "binding": 1, "type": "storage_buffer", "access": "write" }
+      ],
+      "push_constants": {
+        "size": 8,
+        "members": [
+          { "name": "batch_size", "offset": 0, "type": "uint32" },
+          { "name": "num_classes", "offset": 4, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "batch_norm",
+      "file": "batch_norm.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [8, 8, 8],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_buffer",
+          "access": "read_write",
+          "description": "input/output"
+        },
+        {
+          "binding": 1,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "gamma"
+        },
+        {
+          "binding": 2,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "beta"
+        },
+        {
+          "binding": 3,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "mean"
+        },
+        {
+          "binding": 4,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "variance"
+        }
+      ],
+      "push_constants": {
+        "size": 20,
+        "members": [
+          { "name": "batch_size", "offset": 0, "type": "uint32" },
+          { "name": "channels", "offset": 4, "type": "uint32" },
+          { "name": "height", "offset": 8, "type": "uint32" },
+          { "name": "width", "offset": 12, "type": "uint32" },
+          { "name": "epsilon", "offset": 16, "type": "float32" }
+        ]
+      }
+    },
+    {
+      "name": "layer_norm",
+      "file": "layer_norm.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1]
+    },
+    {
+      "name": "max_pool2d",
+      "file": "max_pool2d.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [8, 8, 8],
+      "push_constants": {
+        "size": 24,
+        "members": [
+          { "name": "batch_size", "offset": 0, "type": "uint32" },
+          { "name": "channels", "offset": 4, "type": "uint32" },
+          { "name": "in_height", "offset": 8, "type": "uint32" },
+          { "name": "in_width", "offset": 12, "type": "uint32" },
+          { "name": "kernel_size", "offset": 16, "type": "uint32" },
+          { "name": "stride", "offset": 20, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "avg_pool2d",
+      "file": "avg_pool2d.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [8, 8, 8]
+    },
+    {
+      "name": "global_avg_pool",
+      "file": "global_avg_pool.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [1, 1, 64]
+    },
+    {
+      "name": "gemm",
+      "file": "gemm.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "description": "General matrix multiply",
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "A"
+        },
+        {
+          "binding": 1,
+          "type": "storage_buffer",
+          "access": "read",
+          "description": "B"
+        },
+        {
+          "binding": 2,
+          "type": "storage_buffer",
+          "access": "write",
+          "description": "C"
+        }
+      ],
+      "push_constants": {
+        "size": 24,
+        "members": [
+          { "name": "M", "offset": 0, "type": "uint32" },
+          { "name": "N", "offset": 4, "type": "uint32" },
+          { "name": "K", "offset": 8, "type": "uint32" },
+          { "name": "alpha", "offset": 12, "type": "float32" },
+          { "name": "beta", "offset": 16, "type": "float32" },
+          { "name": "transpose_a", "offset": 20, "type": "uint32" },
+          { "name": "transpose_b", "offset": 22, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "add_tensors",
+      "file": "add_tensors.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1],
+      "description": "Element-wise tensor addition with broadcasting"
+    },
+    {
+      "name": "mul_tensors",
+      "file": "mul_tensors.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1]
+    },
+    {
+      "name": "concat",
+      "file": "concat.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1]
+    },
+    {
+      "name": "split",
+      "file": "split.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1]
+    },
+    {
+      "name": "transpose",
+      "file": "transpose.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1]
+    },
+    {
+      "name": "upsample_nearest",
+      "file": "upsample_nearest.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1]
+    },
+    {
+      "name": "upsample_bilinear",
+      "file": "upsample_bilinear.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1]
+    },
+    {
+      "name": "attention_qkv",
+      "file": "attention_qkv.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [8, 8, 1],
+      "description": "Multi-head attention QKV projection"
+    },
+    {
+      "name": "attention_score",
+      "file": "attention_score.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "description": "Scaled dot-product attention scores"
+    }
+  ]
+}

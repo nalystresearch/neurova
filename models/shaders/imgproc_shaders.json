@@ -1,0 +1,299 @@
+{
+  "version": "1.0.0",
+  "target": "vulkan_1.2",
+  "shaders": [
+    {
+      "name": "color_convert_rgb_gray",
+      "file": "color_convert_rgb_gray.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "write"
+        }
+      ],
+      "push_constants": {
+        "size": 8,
+        "members": [
+          { "name": "width", "offset": 0, "type": "uint32" },
+          { "name": "height", "offset": 4, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "color_convert_bgr_rgb",
+      "file": "color_convert_bgr_rgb.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "write"
+        }
+      ]
+    },
+    {
+      "name": "resize_bilinear",
+      "file": "resize_bilinear.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        { "binding": 0, "type": "combined_image_sampler", "format": "rgba8" },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "write"
+        }
+      ],
+      "push_constants": {
+        "size": 16,
+        "members": [
+          { "name": "src_width", "offset": 0, "type": "uint32" },
+          { "name": "src_height", "offset": 4, "type": "uint32" },
+          { "name": "dst_width", "offset": 8, "type": "uint32" },
+          { "name": "dst_height", "offset": 12, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "gaussian_blur_3x3",
+      "file": "gaussian_blur_3x3.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "write"
+        }
+      ]
+    },
+    {
+      "name": "gaussian_blur_5x5",
+      "file": "gaussian_blur_5x5.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "write"
+        }
+      ]
+    },
+    {
+      "name": "sobel_edge",
+      "file": "sobel_edge.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "write"
+        }
+      ]
+    },
+    {
+      "name": "morphology_erode",
+      "file": "morphology_erode.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "write"
+        },
+        { "binding": 2, "type": "storage_buffer", "access": "read" }
+      ],
+      "push_constants": {
+        "size": 8,
+        "members": [
+          { "name": "kernel_width", "offset": 0, "type": "uint32" },
+          { "name": "kernel_height", "offset": 4, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "morphology_dilate",
+      "file": "morphology_dilate.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "write"
+        },
+        { "binding": 2, "type": "storage_buffer", "access": "read" }
+      ]
+    },
+    {
+      "name": "convolution_generic",
+      "file": "convolution_generic.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "rgba32f",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "rgba32f",
+          "access": "write"
+        },
+        { "binding": 2, "type": "storage_buffer", "access": "read" }
+      ],
+      "push_constants": {
+        "size": 12,
+        "members": [
+          { "name": "kernel_size", "offset": 0, "type": "uint32" },
+          { "name": "width", "offset": 4, "type": "uint32" },
+          { "name": "height", "offset": 8, "type": "uint32" }
+        ]
+      }
+    },
+    {
+      "name": "histogram_256",
+      "file": "histogram_256.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [256, 1, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "read"
+        },
+        { "binding": 1, "type": "storage_buffer", "access": "read_write" }
+      ],
+      "specialization_constants": [
+        { "id": 0, "name": "CHANNEL", "type": "uint32", "default": 0 }
+      ]
+    },
+    {
+      "name": "equalize_histogram",
+      "file": "equalize_histogram.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        {
+          "binding": 0,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "read"
+        },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "r8",
+          "access": "write"
+        },
+        { "binding": 2, "type": "storage_buffer", "access": "read" }
+      ]
+    },
+    {
+      "name": "warp_affine",
+      "file": "warp_affine.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        { "binding": 0, "type": "combined_image_sampler", "format": "rgba8" },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "write"
+        },
+        { "binding": 2, "type": "uniform_buffer" }
+      ]
+    },
+    {
+      "name": "warp_perspective",
+      "file": "warp_perspective.spv",
+      "entry_point": "main",
+      "stage": "compute",
+      "local_size": [16, 16, 1],
+      "bindings": [
+        { "binding": 0, "type": "combined_image_sampler", "format": "rgba8" },
+        {
+          "binding": 1,
+          "type": "storage_image",
+          "format": "rgba8",
+          "access": "write"
+        },
+        { "binding": 2, "type": "uniform_buffer" }
+      ]
+    }
+  ]
+}

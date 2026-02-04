@@ -1,0 +1,334 @@
+// Neurova Protocol Buffer Definitions
+// Model serialization and network layer specifications
+
+syntax = "proto3";
+
+package neurova;
+
+option java_package = "ai.neurova.proto";
+option java_outer_classname = "NeurovaProto";
+
+// Tensor data type
+enum DataType {
+    DT_UNDEFINED = 0;
+    DT_FLOAT32 = 1;
+    DT_FLOAT16 = 2;
+    DT_FLOAT64 = 3;
+    DT_INT8 = 4;
+    DT_INT16 = 5;
+    DT_INT32 = 6;
+    DT_INT64 = 7;
+    DT_UINT8 = 8;
+    DT_UINT16 = 9;
+    DT_UINT32 = 10;
+    DT_UINT64 = 11;
+    DT_BOOL = 12;
+    DT_BFLOAT16 = 13;
+    DT_COMPLEX64 = 14;
+    DT_COMPLEX128 = 15;
+}
+
+// Tensor shape
+message TensorShape {
+    repeated int64 dims = 1;
+    bool dynamic = 2;  // True if shape can change at runtime
+}
+
+// Tensor definition
+message Tensor {
+    string name = 1;
+    DataType dtype = 2;
+    TensorShape shape = 3;
+    bytes data = 4;  // Raw tensor data
+    bool is_constant = 5;
+}
+
+// Neural network layer types
+enum LayerType {
+    LAYER_UNDEFINED = 0;
+    
+    // Core layers
+    LAYER_INPUT = 1;
+    LAYER_OUTPUT = 2;
+    LAYER_IDENTITY = 3;
+    
+    // Convolution layers
+    LAYER_CONV2D = 10;
+    LAYER_CONV2D_TRANSPOSE = 11;
+    LAYER_DEPTHWISE_CONV2D = 12;
+    LAYER_SEPARABLE_CONV2D = 13;
+    LAYER_CONV1D = 14;
+    LAYER_CONV3D = 15;
+    
+    // Pooling layers
+    LAYER_MAX_POOL2D = 20;
+    LAYER_AVG_POOL2D = 21;
+    LAYER_GLOBAL_AVG_POOL = 22;
+    LAYER_GLOBAL_MAX_POOL = 23;
+    LAYER_ADAPTIVE_AVG_POOL = 24;
+    
+    // Normalization layers
+    LAYER_BATCH_NORM = 30;
+    LAYER_LAYER_NORM = 31;
+    LAYER_INSTANCE_NORM = 32;
+    LAYER_GROUP_NORM = 33;
+    
+    // Activation layers
+    LAYER_RELU = 40;
+    LAYER_RELU6 = 41;
+    LAYER_LEAKY_RELU = 42;
+    LAYER_PRELU = 43;
+    LAYER_ELU = 44;
+    LAYER_SELU = 45;
+    LAYER_SIGMOID = 46;
+    LAYER_TANH = 47;
+    LAYER_SOFTMAX = 48;
+    LAYER_SOFTPLUS = 49;
+    LAYER_SILU = 50;
+    LAYER_GELU = 51;
+    LAYER_MISH = 52;
+    LAYER_HARDSWISH = 53;
+    
+    // Linear layers
+    LAYER_DENSE = 60;
+    LAYER_GEMM = 61;
+    LAYER_MATMUL = 62;
+    
+    // Shape manipulation
+    LAYER_RESHAPE = 70;
+    LAYER_FLATTEN = 71;
+    LAYER_SQUEEZE = 72;
+    LAYER_UNSQUEEZE = 73;
+    LAYER_TRANSPOSE = 74;
+    LAYER_PERMUTE = 75;
+    LAYER_CONCAT = 76;
+    LAYER_SPLIT = 77;
+    LAYER_SLICE = 78;
+    LAYER_PAD = 79;
+    
+    // Arithmetic layers
+    LAYER_ADD = 80;
+    LAYER_SUB = 81;
+    LAYER_MUL = 82;
+    LAYER_DIV = 83;
+    LAYER_POW = 84;
+    LAYER_SQRT = 85;
+    LAYER_EXP = 86;
+    LAYER_LOG = 87;
+    
+    // Reduction layers
+    LAYER_REDUCE_SUM = 90;
+    LAYER_REDUCE_MEAN = 91;
+    LAYER_REDUCE_MAX = 92;
+    LAYER_REDUCE_MIN = 93;
+    
+    // Upsampling layers
+    LAYER_UPSAMPLE = 100;
+    LAYER_RESIZE = 101;
+    
+    // Attention layers
+    LAYER_MULTI_HEAD_ATTENTION = 110;
+    LAYER_SELF_ATTENTION = 111;
+    
+    // RNN layers
+    LAYER_LSTM = 120;
+    LAYER_GRU = 121;
+    LAYER_RNN = 122;
+    
+    // Detection layers
+    LAYER_NMS = 130;
+    LAYER_ROI_ALIGN = 131;
+    LAYER_YOLO_DETECT = 132;
+}
+
+// Padding mode
+enum PaddingMode {
+    PAD_VALID = 0;
+    PAD_SAME = 1;
+    PAD_EXPLICIT = 2;
+}
+
+// Convolution layer parameters
+message Conv2DParams {
+    int32 out_channels = 1;
+    int32 kernel_h = 2;
+    int32 kernel_w = 3;
+    int32 stride_h = 4;
+    int32 stride_w = 5;
+    int32 pad_h = 6;
+    int32 pad_w = 7;
+    int32 dilation_h = 8;
+    int32 dilation_w = 9;
+    int32 groups = 10;
+    bool use_bias = 11;
+    PaddingMode padding_mode = 12;
+}
+
+// Pooling layer parameters
+message PoolingParams {
+    int32 kernel_h = 1;
+    int32 kernel_w = 2;
+    int32 stride_h = 3;
+    int32 stride_w = 4;
+    int32 pad_h = 5;
+    int32 pad_w = 6;
+    bool ceil_mode = 7;
+    bool count_include_pad = 8;
+}
+
+// Batch normalization parameters
+message BatchNormParams {
+    float epsilon = 1;
+    float momentum = 2;
+    bool affine = 3;
+    bool track_running_stats = 4;
+}
+
+// Activation layer parameters
+message ActivationParams {
+    float alpha = 1;  // For leaky_relu, elu, etc.
+    float beta = 2;   // For some activations
+    int32 axis = 3;   // For softmax
+}
+
+// Dense/Linear layer parameters
+message DenseParams {
+    int32 out_features = 1;
+    bool use_bias = 2;
+}
+
+// Reshape parameters
+message ReshapeParams {
+    repeated int64 shape = 1;
+    bool allow_zero = 2;
+}
+
+// Resize/Upsample parameters
+message ResizeParams {
+    repeated int64 output_size = 1;
+    repeated float scales = 2;
+    string mode = 3;  // nearest, bilinear, bicubic
+    string coordinate_transformation_mode = 4;
+    bool align_corners = 5;
+}
+
+// Neural network layer
+message Layer {
+    string name = 1;
+    LayerType type = 2;
+    repeated string inputs = 3;
+    repeated string outputs = 4;
+    
+    // Layer-specific parameters (oneof for space efficiency)
+    oneof params {
+        Conv2DParams conv2d = 10;
+        PoolingParams pooling = 11;
+        BatchNormParams batch_norm = 12;
+        ActivationParams activation = 13;
+        DenseParams dense = 14;
+        ReshapeParams reshape = 15;
+        ResizeParams resize = 16;
+    }
+    
+    // Weights
+    repeated Tensor weights = 20;
+}
+
+// Graph input/output specification
+message ValueInfo {
+    string name = 1;
+    DataType dtype = 2;
+    TensorShape shape = 3;
+}
+
+// Complete neural network graph
+message Graph {
+    string name = 1;
+    repeated ValueInfo inputs = 2;
+    repeated ValueInfo outputs = 3;
+    repeated Layer layers = 4;
+    repeated Tensor initializers = 5;  // Constant tensors
+}
+
+// Model metadata
+message ModelMetadata {
+    string name = 1;
+    string version = 2;
+    string description = 3;
+    string author = 4;
+    string license = 5;
+    string framework = 6;  // Original framework (pytorch, tensorflow, etc.)
+    map<string, string> custom_metadata = 7;
+}
+
+// Input preprocessing specification
+message Preprocessing {
+    // Resize
+    int32 target_width = 1;
+    int32 target_height = 2;
+    string resize_mode = 3;
+    
+    // Normalization
+    repeated float mean = 4;
+    repeated float std = 5;
+    float scale = 6;
+    
+    // Color conversion
+    string color_format = 7;  // RGB, BGR, GRAY
+    
+    // Data layout
+    string data_layout = 8;  // NCHW, NHWC
+}
+
+// Post-processing specification
+message Postprocessing {
+    string type = 1;  // classification, detection, segmentation
+    
+    // For classification
+    string labels_file = 2;
+    int32 top_k = 3;
+    
+    // For detection
+    float confidence_threshold = 4;
+    float nms_threshold = 5;
+    int32 max_detections = 6;
+}
+
+// Complete model definition
+message Model {
+    int64 ir_version = 1;  // Neurova IR version
+    ModelMetadata metadata = 2;
+    Graph graph = 3;
+    Preprocessing preprocessing = 4;
+    Postprocessing postprocessing = 5;
+}
+
+// Quantization information
+message QuantizationInfo {
+    DataType quantized_dtype = 1;
+    float scale = 2;
+    int32 zero_point = 3;
+    repeated float per_channel_scales = 4;
+    repeated int32 per_channel_zero_points = 5;
+    int32 quantization_axis = 6;
+}
+
+// Calibration data for quantization
+message CalibrationData {
+    string layer_name = 1;
+    float min_value = 2;
+    float max_value = 3;
+    repeated float histogram = 4;
+    int32 num_samples = 5;
+}
+
+// Optimization hints
+message OptimizationHints {
+    bool use_fp16 = 1;
+    bool use_int8 = 2;
+    bool fuse_batch_norm = 3;
+    bool fuse_activations = 4;
+    bool optimize_memory = 5;
+    int32 workspace_size_mb = 6;
+    repeated string preferred_layouts = 7;
+}

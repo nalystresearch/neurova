@@ -1,0 +1,302 @@
+/**
+ * Neurova GLSL Compute Shaders for Vulkan
+ * Image processing compute kernels
+ */
+#version 450
+
+layout(local_size_x = 16, local_size_y = 16, local_size_z = 1) in;
+
+// Image bindings
+layout(binding = 0, r8) readonly uniform image2D inputImage;
+layout(binding = 1, r8) writeonly uniform image2D outputImage;
+
+// Parameters
+layout(push_constant) uniform Params {
+    int width;
+    int height;
+    int kernelSize;
+    float param1;
+    float param2;
+} params;
+
+// ============================================================================
+// Color Conversion
+// ============================================================================
+
+layout(binding = 0, rgba8) readonly uniform image2D rgbInput;
+layout(binding = 1, r8) writeonly uniform image2D grayOutput;
+
+void rgb_to_gray() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= params.width || pos.y >= params.height) return;
+    
+    vec4 rgb = imageLoad(rgbInput, pos);
+    float gray = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+    
+    imageStore(grayOutput, pos, vec4(gray, 0, 0, 1));
+}
+
+// ============================================================================
+// Box Filter
+// ============================================================================
+
+void box_filter() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= params.width || pos.y >= params.height) return;
+    
+    int half = params.kernelSize / 2;
+    float sum = 0.0;
+    int count = 0;
+    
+    for (int ky = -half; ky <= half; ky++) {
+        for (int kx = -half; kx <= half; kx++) {
+            ivec2 samplePos = clamp(pos + ivec2(kx, ky), 
+                                    ivec2(0), 
+                                    ivec2(params.width - 1, params.height - 1));
+            sum += imageLoad(inputImage, samplePos).r;
+            count++;
+        }
+    }
+    
+    imageStore(outputImage, pos, vec4(sum / float(count), 0, 0, 1));
+}
+
+// ============================================================================
+// Gaussian Blur
+// ============================================================================
+
+layout(binding = 2, std430) readonly buffer GaussianKernel {
+    float weights[];
+};
+
+void gaussian_blur() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= params.width || pos.y >= params.height) return;
+    
+    int half = params.kernelSize / 2;
+    float sum = 0.0;
+    
+    for (int ky = -half; ky <= half; ky++) {
+        for (int kx = -half; kx <= half; kx++) {
+            ivec2 samplePos = clamp(pos + ivec2(kx, ky),
+                                    ivec2(0),
+                                    ivec2(params.width - 1, params.height - 1));
+            int kidx = (ky + half) * params.kernelSize + (kx + half);
+            sum += imageLoad(inputImage, samplePos).r * weights[kidx];
+        }
+    }
+    
+    imageStore(outputImage, pos, vec4(clamp(sum, 0.0, 1.0), 0, 0, 1));
+}
+
+// ============================================================================
+// Sobel Edge Detection
+// ============================================================================
+
+layout(binding = 1, rg8) writeonly uniform image2D sobelOutput;
+
+void sobel() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x <= 0 || pos.x >= params.width - 1 ||
+        pos.y <= 0 || pos.y >= params.height - 1) return;
+    
+    // Sobel X
+    float gx = -imageLoad(inputImage, pos + ivec2(-1, -1)).r
+             + imageLoad(inputImage, pos + ivec2(1, -1)).r
+             - 2.0 * imageLoad(inputImage, pos + ivec2(-1, 0)).r
+             + 2.0 * imageLoad(inputImage, pos + ivec2(1, 0)).r
+             - imageLoad(inputImage, pos + ivec2(-1, 1)).r
+             + imageLoad(inputImage, pos + ivec2(1, 1)).r;
+    
+    // Sobel Y
+    float gy = -imageLoad(inputImage, pos + ivec2(-1, -1)).r
+             - 2.0 * imageLoad(inputImage, pos + ivec2(0, -1)).r
+             - imageLoad(inputImage, pos + ivec2(1, -1)).r
+             + imageLoad(inputImage, pos + ivec2(-1, 1)).r
+             + 2.0 * imageLoad(inputImage, pos + ivec2(0, 1)).r
+             + imageLoad(inputImage, pos + ivec2(1, 1)).r;
+    
+    imageStore(sobelOutput, pos, vec4(abs(gx), abs(gy), 0, 1));
+}
+
+// ============================================================================
+// Bilateral Filter
+// ============================================================================
+
+void bilateral_filter() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= params.width || pos.y >= params.height) return;
+    
+    int half = params.kernelSize / 2;
+    float centerVal = imageLoad(inputImage, pos).r;
+    
+    float sum = 0.0;
+    float weightSum = 0.0;
+    
+    float spatialCoeff = -0.5 / (params.param1 * params.param1);
+    float rangeCoeff = -0.5 / (params.param2 * params.param2);
+    
+    for (int ky = -half; ky <= half; ky++) {
+        for (int kx = -half; kx <= half; kx++) {
+            ivec2 samplePos = clamp(pos + ivec2(kx, ky),
+                                    ivec2(0),
+                                    ivec2(params.width - 1, params.height - 1));
+            
+            float neighborVal = imageLoad(inputImage, samplePos).r;
+            
+            float spatialDist = float(kx * kx + ky * ky);
+            float spatialWeight = exp(spatialDist * spatialCoeff);
+            
+            float rangeDist = (centerVal - neighborVal) * (centerVal - neighborVal);
+            float rangeWeight = exp(rangeDist * rangeCoeff);
+            
+            float weight = spatialWeight * rangeWeight;
+            sum += neighborVal * weight;
+            weightSum += weight;
+        }
+    }
+    
+    imageStore(outputImage, pos, vec4(sum / weightSum, 0, 0, 1));
+}
+
+// ============================================================================
+// Morphological Operations
+// ============================================================================
+
+void dilate() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= params.width || pos.y >= params.height) return;
+    
+    int half = params.kernelSize / 2;
+    float maxVal = 0.0;
+    
+    for (int ky = -half; ky <= half; ky++) {
+        for (int kx = -half; kx <= half; kx++) {
+            ivec2 samplePos = clamp(pos + ivec2(kx, ky),
+                                    ivec2(0),
+                                    ivec2(params.width - 1, params.height - 1));
+            maxVal = max(maxVal, imageLoad(inputImage, samplePos).r);
+        }
+    }
+    
+    imageStore(outputImage, pos, vec4(maxVal, 0, 0, 1));
+}
+
+void erode() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= params.width || pos.y >= params.height) return;
+    
+    int half = params.kernelSize / 2;
+    float minVal = 1.0;
+    
+    for (int ky = -half; ky <= half; ky++) {
+        for (int kx = -half; kx <= half; kx++) {
+            ivec2 samplePos = clamp(pos + ivec2(kx, ky),
+                                    ivec2(0),
+                                    ivec2(params.width - 1, params.height - 1));
+            minVal = min(minVal, imageLoad(inputImage, samplePos).r);
+        }
+    }
+    
+    imageStore(outputImage, pos, vec4(minVal, 0, 0, 1));
+}
+
+// ============================================================================
+// Resize Bilinear
+// ============================================================================
+
+layout(push_constant) uniform ResizeParams {
+    int srcWidth;
+    int srcHeight;
+    int dstWidth;
+    int dstHeight;
+} resizeParams;
+
+layout(binding = 0) uniform sampler2D srcTexture;
+layout(binding = 1, rgba8) writeonly uniform image2D dstImage;
+
+void resize_bilinear() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= resizeParams.dstWidth || pos.y >= resizeParams.dstHeight) return;
+    
+    vec2 srcCoord = vec2(
+        float(pos.x) / float(resizeParams.dstWidth) * float(resizeParams.srcWidth),
+        float(pos.y) / float(resizeParams.dstHeight) * float(resizeParams.srcHeight)
+    );
+    
+    vec4 color = texture(srcTexture, srcCoord / vec2(resizeParams.srcWidth, resizeParams.srcHeight));
+    imageStore(dstImage, pos, color);
+}
+
+// ============================================================================
+// Threshold
+// ============================================================================
+
+void threshold_binary() {
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+    
+    if (pos.x >= params.width || pos.y >= params.height) return;
+    
+    float val = imageLoad(inputImage, pos).r;
+    float thresh = params.param1;
+    float maxVal = params.param2;
+    
+    float result = val > thresh ? maxVal : 0.0;
+    imageStore(outputImage, pos, vec4(result, 0, 0, 1));
+}
+
+// ============================================================================
+// DNN Activation Functions
+// ============================================================================
+
+layout(binding = 0, std430) buffer InputBuffer {
+    float inputData[];
+};
+
+layout(binding = 1, std430) buffer OutputBuffer {
+    float outputData[];
+};
+
+layout(push_constant) uniform DNNParams {
+    uint count;
+    float alpha;
+} dnnParams;
+
+layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
+
+void relu() {
+    uint idx = gl_GlobalInvocationID.x;
+    if (idx < dnnParams.count) {
+        outputData[idx] = max(inputData[idx], 0.0);
+    }
+}
+
+void leaky_relu() {
+    uint idx = gl_GlobalInvocationID.x;
+    if (idx < dnnParams.count) {
+        float val = inputData[idx];
+        outputData[idx] = val > 0.0 ? val : val * dnnParams.alpha;
+    }
+}
+
+void sigmoid() {
+    uint idx = gl_GlobalInvocationID.x;
+    if (idx < dnnParams.count) {
+        outputData[idx] = 1.0 / (1.0 + exp(-inputData[idx]));
+    }
+}
+
+void tanh_activation() {
+    uint idx = gl_GlobalInvocationID.x;
+    if (idx < dnnParams.count) {
+        outputData[idx] = tanh(inputData[idx]);
+    }
+}

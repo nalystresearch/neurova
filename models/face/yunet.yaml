@@ -1,0 +1,132 @@
+# copyright (c) 2025 @analytics withharry
+# all rights reserved.
+# licensed under the mit license.
+
+# YuNet Face Detection Configuration for Neurova
+
+name: yunet
+version: 1.0.0
+framework: onnx
+type: face_detection
+description: YuNet - Lightweight face detection model
+
+# Model files
+files:
+  onnx: yunet.onnx
+  openvino_xml: yunet.xml
+  openvino_bin: yunet.bin
+  ncnn_param: yunet.param
+  ncnn_bin: yunet.bin
+
+# Input specification
+input:
+  name: input
+  shape: [1, 3, 320, 320]
+  dtype: float32
+  format: NCHW
+  color_order: BGR
+
+  # Dynamic input sizes supported
+  dynamic_shape:
+    min: [1, 3, 120, 120]
+    max: [1, 3, 1280, 1280]
+
+  preprocessing:
+    resize:
+      width: 320
+      height: 320
+      interpolation: bilinear
+      keep_ratio: true
+    normalize:
+      scale: 1.0
+      mean: [0.0, 0.0, 0.0]
+      std: [1.0, 1.0, 1.0]
+
+# Output specification
+output:
+  - name: loc
+    shape: [1, -1, 14] # [batch, anchors, coords]
+    dtype: float32
+    description: Bounding box locations
+
+  - name: conf
+    shape: [1, -1, 2] # [batch, anchors, class_scores]
+    dtype: float32
+    description: Face confidence scores
+
+  - name: iou
+    shape: [1, -1, 1] # [batch, anchors, iou_score]
+    dtype: float32
+    description: IoU prediction scores
+
+# Detection output format
+detection:
+  format: landmarks # Includes facial landmarks
+
+  # Bounding box: x1, y1, x2, y2
+  box_indices: [0, 1, 2, 3]
+
+  # 5-point facial landmarks
+  landmarks:
+    count: 5
+    indices: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    names:
+      - right_eye
+      - left_eye
+      - nose
+      - right_mouth
+      - left_mouth
+
+# Post-processing
+postprocess:
+  type: face_detection
+  conf_threshold: 0.6
+  iou_threshold: 0.3
+  top_k: 5000
+  max_faces: 100
+
+  # Prior boxes / anchors
+  priors:
+    feature_maps:
+      - stride: 8
+        sizes: [10, 16, 24]
+      - stride: 16
+        sizes: [32, 48]
+      - stride: 32
+        sizes: [64, 96]
+      - stride: 64
+        sizes: [128, 192, 256]
+    variance: [0.1, 0.2]
+
+# Face alignment for recognition
+alignment:
+  enabled: true
+  output_size: [112, 112]
+  reference_landmarks:
+    right_eye: [38.2946, 51.6963]
+    left_eye: [73.5318, 51.5014]
+    nose: [56.0252, 71.7366]
+    right_mouth: [41.5493, 92.3655]
+    left_mouth: [70.7299, 92.2041]
+
+# Performance benchmarks
+benchmarks:
+  320x320:
+    cpu_latency_ms: 5.2
+    gpu_latency_ms: 1.1
+  640x640:
+    cpu_latency_ms: 18.5
+    gpu_latency_ms: 3.2
+
+# Evaluation metrics
+metrics:
+  widerface_easy: 0.921
+  widerface_medium: 0.903
+  widerface_hard: 0.812
+
+# Metadata
+metadata:
+  author: ShiqiYu
+  license: MIT
+  paper: https://arxiv.org/abs/2109.11111
+  repository: https://github.com/ShiqiYu/libfacedetection

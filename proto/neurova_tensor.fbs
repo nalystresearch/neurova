@@ -1,0 +1,128 @@
+// Neurova Tensor FlatBuffers Schema
+// High-performance tensor serialization format
+
+namespace neurova.fb;
+
+// Data types
+enum DataType : byte {
+    Float32 = 0,
+    Float16 = 1,
+    Float64 = 2,
+    Int8 = 3,
+    Int16 = 4,
+    Int32 = 5,
+    Int64 = 6,
+    UInt8 = 7,
+    UInt16 = 8,
+    UInt32 = 9,
+    UInt64 = 10,
+    Bool = 11,
+    BFloat16 = 12,
+    Complex64 = 13,
+    Complex128 = 14
+}
+
+// Memory layout
+enum MemoryLayout : byte {
+    RowMajor = 0,    // C-style contiguous
+    ColMajor = 1,    // Fortran-style contiguous
+    Strided = 2      // Custom strides
+}
+
+// Tensor shape
+table TensorShape {
+    dims: [int64];
+    strides: [int64];    // Optional, for strided layout
+}
+
+// Tensor metadata
+table TensorMeta {
+    name: string;
+    dtype: DataType;
+    shape: TensorShape;
+    layout: MemoryLayout = RowMajor;
+    is_view: bool = false;
+    offset: int64 = 0;   // Offset into data buffer
+}
+
+// Dense tensor with inline data
+table DenseTensor {
+    meta: TensorMeta;
+    data: [ubyte];       // Raw tensor data
+}
+
+// Sparse tensor (COO format)
+table SparseTensorCOO {
+    meta: TensorMeta;
+    nnz: int64;          // Number of non-zero elements
+    indices: [int64];    // Flattened indices (nnz * ndim)
+    values: [ubyte];     // Non-zero values
+}
+
+// Sparse tensor (CSR format)
+table SparseTensorCSR {
+    meta: TensorMeta;
+    nnz: int64;
+    crow_indices: [int64];  // Row pointers
+    col_indices: [int64];   // Column indices
+    values: [ubyte];        // Non-zero values
+}
+
+// Quantization parameters
+table QuantParams {
+    scale: float;
+    zero_point: int32;
+    per_channel: bool = false;
+    axis: int32 = 0;
+    channel_scales: [float];
+    channel_zero_points: [int32];
+}
+
+// Quantized tensor
+table QuantizedTensor {
+    meta: TensorMeta;
+    data: [ubyte];
+    quant_params: QuantParams;
+}
+
+// Union of tensor types
+union TensorData {
+    DenseTensor,
+    SparseTensorCOO,
+    SparseTensorCSR,
+    QuantizedTensor
+}
+
+// Tensor container
+table Tensor {
+    data: TensorData;
+}
+
+// Tensor list (for model weights)
+table TensorList {
+    tensors: [Tensor];
+}
+
+// Buffer reference (for memory-mapped access)
+table BufferRef {
+    buffer_id: int32;
+    offset: int64;
+    size: int64;
+}
+
+// External buffer pool
+table BufferPool {
+    buffers: [ubyte];    // Concatenated buffer data
+    buffer_sizes: [int64];
+}
+
+// Root table for tensor file
+table TensorFile {
+    version: string;
+    tensors: TensorList;
+    buffer_pool: BufferPool;
+}
+
+root_type TensorFile;
+file_identifier "NVTF";
+file_extension "nvtensor";
