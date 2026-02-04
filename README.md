@@ -8,7 +8,7 @@ Neurova exists to break that cycle. One install, one namespace, and you can go f
 
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/nalystresearch/neurova/blob/main/LICENSE)
-[![PyPI](https://img.shields.io/badge/pypi-v0.0.1-blue.svg)](https://pypi.org/project/neurova/)
+[![PyPI](https://img.shields.io/badge/pypi-v0.0.2-blue.svg)](https://pypi.org/project/neurova/)
 
 **Navigation:** [Installation](#installation) · [Quick Start](#quick-start) · [Modules](#modules) · [Built-in Datasets](#built-in-datasets) · [Examples](#examples) · [Documentation](#documentation)
 
@@ -83,7 +83,7 @@ cd neurova
 pip install -e ".[dev]"
 ```
 
-See [INSTALLATION.md](INSTALLATION.md) for platform-specific guides and GPU setup.
+See [INSTALLATION.md](https://github.com/nalystresearch/neurova/blob/main/INSTALLATION.md) for platform-specific guides and GPU setup.
 
 ## Quick Start
 
@@ -324,13 +324,13 @@ python examples/face_recognition_project/01_collect_faces.py
 
 ## Documentation
 
-| Document                                 | Description                      |
-| ---------------------------------------- | -------------------------------- |
-| [INSTALLATION.md](INSTALLATION.md)       | Installation and setup guide     |
-| [QUICKSTART.md](QUICKSTART.md)           | Quick reference and API overview |
-| [GETTING_STARTED.md](GETTING_STARTED.md) | Development guide                |
-| [ARCHITECTURE.md](ARCHITECTURE.md)       | Module structure and design      |
-| [DOCS_INDEX.md](DOCS_INDEX.md)           | Full documentation index         |
+| Document                                                                                     | Description                      |
+| -------------------------------------------------------------------------------------------- | -------------------------------- |
+| [INSTALLATION.md](https://github.com/nalystresearch/neurova/blob/main/INSTALLATION.md)       | Installation and setup guide     |
+| [QUICKSTART.md](https://github.com/nalystresearch/neurova/blob/main/QUICKSTART.md)           | Quick reference and API overview |
+| [GETTING_STARTED.md](https://github.com/nalystresearch/neurova/blob/main/GETTING_STARTED.md) | Development guide                |
+| [ARCHITECTURE.md](https://github.com/nalystresearch/neurova/blob/main/ARCHITECTURE.md)       | Module structure and design      |
+| [DOCS_INDEX.md](https://github.com/nalystresearch/neurova/blob/main/DOCS_INDEX.md)           | Full documentation index         |
 
 ## Performance
 
@@ -343,21 +343,21 @@ Neurova is optimized using:
 
 ## Contributing
 
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions welcome! See [CONTRIBUTING.md](https://github.com/nalystresearch/neurova/blob/main/CONTRIBUTING.md) for guidelines.
 
-- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) - Community standards
-- [SECURITY.md](SECURITY.md) - Security reporting
-- [SUPPORT.md](SUPPORT.md) - Getting help
+- [CODE_OF_CONDUCT.md](https://github.com/nalystresearch/neurova/blob/main/CODE_OF_CONDUCT.md) - Community standards
+- [SECURITY.md](https://github.com/nalystresearch/neurova/blob/main/SECURITY.md) - Security reporting
+- [SUPPORT.md](https://github.com/nalystresearch/neurova/blob/main/SUPPORT.md) - Getting help
 
 ## License
 
 MIT License - Copyright (c) 2025 @squid consultancy group (scg)
 
-See [LICENSE](LICENSE) for details.
+See [LICENSE](https://github.com/nalystresearch/neurova/blob/main/LICENSE) for details.
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for version history.
+See [CHANGELOG.md](https://github.com/nalystresearch/neurova/blob/main/CHANGELOG.md) for version history.
 
 ---
 

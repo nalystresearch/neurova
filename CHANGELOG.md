@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.0.2] - 2026-02-04
+
+**Documentation & Links Fix**
+
+### Fixed
+
+- Fixed all documentation links in README.md to use full GitHub URLs for proper rendering on PyPI
+- Links to INSTALLATION.md, QUICKSTART.md, GETTING_STARTED.md, ARCHITECTURE.md, DOCS_INDEX.md now work on PyPI
+- Links to CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, SUPPORT.md, LICENSE, CHANGELOG.md now work on PyPI
+
+### Changed
+
+- Updated version badge to 0.0.2
+
+---
+
 ## [0.0.1] - 2026-02-04
 
 **Initial Stable Release**
