@@ -1,12 +1,12 @@
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Object Detection Model Architecture.
 
-Provides a simplified YOLO-like detection architecture using Neurova primitives.
+Provides a single-stage detection architecture using Neurova primitives.
 """
 
 from __future__ import annotations
@@ -172,7 +172,7 @@ class CSPBlock(Module):
 
 class Backbone(Module):
     """
-    Feature extraction backbone (simplified CSP-Darknet style).
+    Feature extraction backbone (simplified CSP-style).
     
     Args:
         in_channels: Input channels (3 for RGB)
@@ -377,7 +377,7 @@ class DetectionHead(Module):
 
 class DetectionModel(Module):
     """
-    Complete object detection model (YOLO-style).
+    Complete single-stage object detection model.
     
     Args:
         num_classes: Number of object classes
@@ -605,6 +605,6 @@ class DetectionModel(Module):
                 param.data = data[key]
 
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.imgproc.histogram - Histogram operations
@@ -405,6 +405,6 @@ __all__ = [
     "HISTCMP_CHISQR_ALT",
     "HISTCMP_KL_DIV",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

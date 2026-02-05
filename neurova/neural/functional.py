@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Neurova neural: functional helpers."""
 
@@ -92,6 +92,6 @@ def mse_loss(pred: Tensor, target: np.ndarray, *, reduction: str = "mean") -> Te
     if reduction == "none":
         return sq
     raise ValueError("reduction must be one of: mean, sum, none")
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

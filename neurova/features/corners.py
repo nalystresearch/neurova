@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Corner detection for Neurova."""
 
@@ -209,6 +209,6 @@ def _local_max_mask(r: np.ndarray, radius: int) -> np.ndarray:
 
     local_max = windows.max(axis=(2, 3))
     return r >= local_max
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

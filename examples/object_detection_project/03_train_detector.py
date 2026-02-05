@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 3: Train Object Detector
-==============================
+
 
 This script trains an object detector using various methods:
 1. HOG + SVM (traditional ML)
@@ -503,9 +503,9 @@ def train_detector(method: str = 'hog'):
     """
     Main function to train detector.
     """
-    print("=" * 60)
+    print("")
     print("STEP 3: TRAIN OBJECT DETECTOR")
-    print("=" * 60)
+    print("")
     print(f"\n Method: {method.upper()}")
     
     samples_dir = DATA_DIR / "samples"
@@ -607,8 +607,8 @@ def train_detector(method: str = 'hog'):
         print(f"\n Training files created:")
         print(f"   Positives: {pos_file}")
         print(f"   Negatives: {neg_file}")
-        print("\n To train cascade, use OpenCV's opencv_traincascade tool:")
-        print(f"   opencv_traincascade -data {MODELS_DIR}/cascade -vec positives.vec -bg {neg_file} ...")
+        print("\n To train cascade, use the nv_traincascade tool:")
+        print(f"   nv_traincascade -data {MODELS_DIR}/cascade -vec positives.vec -bg {neg_file} ...")
         
         return None
     
@@ -630,7 +630,7 @@ def main():
     if detector:
         print("\n" + "=" * 60)
         print("TRAINING COMPLETE")
-        print("=" * 60)
+        print("")
         print("\n Detector trained successfully!")
         print("\n Next step: python 04_evaluate_detector.py")
 

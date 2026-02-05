@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 4: Evaluate Object Detector
-=================================
+
 
 This script evaluates the trained object detector:
 1. Computes precision, recall, F1-score
@@ -265,9 +265,9 @@ def evaluate_detector(model_path: Path = None, iou_threshold: float = 0.5,
     """
     Main evaluation function.
     """
-    print("=" * 60)
+    print("")
     print("STEP 4: EVALUATE OBJECT DETECTOR")
-    print("=" * 60)
+    print("")
     
 # select data directory
     data_dir = VAL_DIR if use_validation else TEST_DIR
@@ -426,14 +426,14 @@ def evaluate_detector(model_path: Path = None, iou_threshold: float = 0.5,
 # summary
     print("\n" + "=" * 60)
     print("EVALUATION SUMMARY")
-    print("=" * 60)
+    print("")
     print(f"  Model:      {model_path.name}")
     print(f"  Test set:   {len(test_data)} images")
     print(f"  Precision:  {precision:.4f}")
     print(f"  Recall:     {recall:.4f}")
     print(f"  F1 Score:   {f1:.4f}")
     print(f"  mAP:        {mAP:.4f}")
-    print("=" * 60)
+    print("")
     
     print("\n Evaluation complete!")
     print("\n Next step: python 05_test_webcam.py")

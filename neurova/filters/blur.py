@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Blur filters for Neurova."""
 
@@ -152,6 +152,6 @@ def _median2d_single_channel(padded: np.ndarray, k: int) -> np.ndarray:
 
     # median over last two axes.
     return np.median(windows, axis=(2, 3))
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

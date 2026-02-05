@@ -1,7 +1,7 @@
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Configuration file for Object Detection Project
@@ -161,6 +161,6 @@ for subdir in ['images', 'annotations']:
     (VAL_DIR / subdir).mkdir(parents=True, exist_ok=True)
 
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

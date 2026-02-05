@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 12: GPU Acceleration & Performance
-===========================================
+
 
 This chapter covers:
 - Device configuration (CPU/GPU)
@@ -23,9 +23,9 @@ import numpy as np
 import time
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 12: GPU Acceleration & Performance")
-print("=" * 60)
+print("")
 
 import neurova as nv
 
@@ -510,4 +510,4 @@ print("   Built caching system")
 print("   Used memory-efficient algorithms")
 print("   Profiled code sections")
 print("   Ran benchmark suite")
-print("=" * 60)
+print("")

@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Time series decomposition methods."""
 
@@ -200,6 +200,6 @@ def stl_decompose(
 
 
 __all__ = ["seasonal_decompose", "stl_decompose", "DecompositionResult"]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

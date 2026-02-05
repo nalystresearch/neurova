@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Thresholding operations for Neurova."""
 
@@ -115,6 +115,6 @@ def _cast_back(arr: np.ndarray, dtype: np.dtype) -> np.ndarray:
         return np.rint(arr).astype(dtype)
 
     return arr.astype(dtype)
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

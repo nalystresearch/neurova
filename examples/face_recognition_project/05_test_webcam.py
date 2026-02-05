@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 5: Test with Webcam
-=========================
+
 
 This script runs real-time face recognition using your webcam:
 1. Loads the trained model
@@ -46,9 +46,9 @@ def test_webcam(method: str = 'lbph', device: int = 0, threshold: float = 100.0)
         device: Camera device ID
         threshold: Confidence threshold (lower = stricter)
     """
-    print("=" * 60)
+    print("")
     print("STEP 5: TEST WITH WEBCAM")
-    print("=" * 60)
+    print("")
     
     # Step 1: Load model
     print("\n Loading trained model...")
@@ -83,24 +83,24 @@ def test_webcam(method: str = 'lbph', device: int = 0, threshold: float = 100.0)
 # create detector
     detector = FaceDetector(method=DETECTION_CONFIG['method'])
     
-    # Step 2: Try to use OpenCV for better webcam support
+    # Step 2: Try to use cv2 for better webcam support
     try:
         import cv2
         use_cv2 = True
-        print("\n Using OpenCV for webcam...")
+        print("\n Using cv2 for webcam...")
     except ImportError:
         use_cv2 = False
         print("\n Using Neurova VideoCapture...")
-        print("     Install OpenCV for better experience: pip install opencv-python")
+        print("     Install cv2 for better experience: pip install cv2")
     
     if use_cv2:
-        run_webcam_opencv(detector, recognizer, label_names, face_size, device, threshold)
+        run_webcam_nv(detector, recognizer, label_names, face_size, device, threshold)
     else:
         run_webcam_neurova(detector, recognizer, label_names, face_size, device, threshold)
 
 
-def run_webcam_opencv(detector, recognizer, label_names, face_size, device, threshold):
-    """Run webcam test with OpenCV."""
+def run_webcam_nv(detector, recognizer, label_names, face_size, device, threshold):
+    """Run webcam test with cv2."""
     import cv2
     
     cap = cv2.VideoCapture(device)
@@ -116,7 +116,7 @@ def run_webcam_opencv(detector, recognizer, label_names, face_size, device, thre
     print("  'q' - Quit")
     print("  's' - Take screenshot")
     print("  'r' - Reset FPS counter")
-    print("-" * 60)
+    print("")
     print("\n Webcam running... Press 'q' to quit")
     
     frame_count = 0
@@ -213,7 +213,7 @@ def run_webcam_neurova(detector, recognizer, label_names, face_size, device, thr
     
     cap = VideoCapture(device)
     
-    print("\n  No live preview available without OpenCV")
+    print("\n  No live preview available without cv2")
     print("    Processing frames and printing results...")
     print("\n    Press Ctrl+C to stop\n")
     

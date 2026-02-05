@@ -1,12 +1,12 @@
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Object Detector - High-level detection API.
 
-Provides a simple interface for object detection similar to YOLO.
+Provides a simple interface for object detection.
 """
 
 from __future__ import annotations
@@ -133,7 +133,7 @@ class ObjectDetector:
     """
     High-level object detector with training and inference.
     
-    Provides a YOLO-like interface for object detection.
+    Provides a simple interface for object detection.
     
     Args:
         num_classes: Number of object classes
@@ -147,7 +147,7 @@ class ObjectDetector:
         >>> detector = ObjectDetector(num_classes=80, model_size='small')
         >>> 
         >>> # Load pretrained weights
-        >>> detector.load('yolo_weights.npz')
+        >>> detector.load('detector_weights.npz')
         >>> 
         >>> # Detect objects
         >>> results = detector.detect(image)
@@ -304,7 +304,7 @@ class ObjectDetector:
         Train the detector on a dataset.
         
         Args:
-            data_dir: Path to dataset (YOLO format)
+            data_dir: Path to dataset directory
             epochs: Number of training epochs
             batch_size: Batch size
             learning_rate: Initial learning rate
@@ -499,6 +499,6 @@ class ObjectDetector:
         return f"ObjectDetector(num_classes={self.num_classes}, model_size='{self.model_size}')"
 
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

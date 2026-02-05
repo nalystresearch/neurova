@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.features.descriptors - Feature Detectors and Descriptors
@@ -865,6 +865,6 @@ __all__ = [
     "AKAZE_DESCRIPTOR_MLDB_UPRIGHT",
     "AKAZE_DESCRIPTOR_MLDB",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

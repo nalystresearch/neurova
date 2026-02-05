@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Custom exceptions for Neurova library"""
 
@@ -129,6 +129,6 @@ class DataTypeError(NeurovaError):
         if message is None:
             message = f"Data type mismatch: expected {expected_dtype}, got {actual_dtype}"
         super().__init__(message)
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

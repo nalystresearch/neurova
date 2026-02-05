@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Camera calibration for Neurova
@@ -733,6 +733,6 @@ __all__ = [
     "RANSAC", "LMEDS", "RHO",
     "FM_7POINT", "FM_8POINT", "FM_RANSAC", "FM_LMEDS",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

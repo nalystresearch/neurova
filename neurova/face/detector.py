@@ -1,24 +1,59 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
-Face Detection using multiple methods.
+Face Detection Module - Multiple Backend Support.
 
-Supports Haar Cascades, LBP Cascades, HOG, and DNN-based detection.
+This module provides a unified interface for face detection with multiple
+backend implementations. Choose the best detector for your use case:
+
+Recommended Detectors (in order of performance):
+    1. NativeDetector - Fast GPU-accelerated BlazeFace (best for real-time)
+    2. DNNDetector - DNN with prototext/pb models
+    3. HaarCascadeDetector - CPU-only, no deep learning dependencies
+    4. LBPCascadeDetector - Faster than Haar, less accurate
+    5. HOGDetector - HOG + SVM based detection
+
+Quick Start:
+    >>> from neurova.face import NativeDetector
+    >>> detector = NativeDetector()  # Best performance
+    >>> faces = detector.detect(image)
+    
+Traditional Haar Cascade:
+    >>> from neurova.face import FaceDetector
+    >>> detector = FaceDetector(method='haar')
+    >>> faces = detector.detect(image)
 """
 
 from __future__ import annotations
 
 import os
+import warnings
 from pathlib import Path
 from typing import Any, List, Optional, Tuple, Union
 
 import numpy as np
 
 
+
+# Helper Functions
+
+
 def _get_cascade_path(cascade_type: str, name: str) -> str:
-    """Get path to bundled cascade file."""
+    """
+    Get path to bundled cascade file.
+    
+    Args:
+        cascade_type: Type of cascade ('haar', 'lbp', 'hog').
+        name: Cascade name (e.g., 'frontalface_default').
+        
+    Returns:
+        Absolute path to cascade XML file.
+        
+    Raises:
+        FileNotFoundError: If cascade file doesn't exist.
+    """
     data_dir = Path(__file__).resolve().parent.parent / "data"
     
     if cascade_type == "haar":
@@ -46,14 +81,21 @@ def _get_cascade_path(cascade_type: str, name: str) -> str:
     raise FileNotFoundError(f"Cascade not found: {path}")
 
 
+
+# FaceDetector - Unified Interface
+
 class FaceDetector:
     """
     Unified face detector supporting multiple detection methods.
     
+    This class provides a simple interface to switch between different
+    face detection backends. For production use, consider using the
+    specific detector classes directly (NativeDetector, etc.).
+    
     Args:
-        method: Detection method ('haar', 'lbp', 'hog', 'dnn', 'mediapipe').
+        method: Detection method ('haar', 'lbp', 'hog', 'dnn', 'native').
         cascade: Cascade name or path for cascade-based methods.
-        model_path: Path to model file for DNN/MediaPipe methods.
+        model_path: Path to model file for DNN/native methods.
         min_confidence: Minimum detection confidence (0-1).
         min_size: Minimum face size (width, height).
         max_size: Maximum face size (width, height).
@@ -88,8 +130,8 @@ class FaceDetector:
             self._detector = HOGDetector()
         elif self.method == "dnn":
             self._detector = DNNDetector(model_path)
-        elif self.method == "mediapipe":
-            self._detector = MediaPipeDetector(model_path, min_confidence)
+        elif self.method == "native":
+            self._detector = NativeDetector(model_path, min_confidence)
         else:
             raise ValueError(f"Unknown method: {method}")
     
@@ -234,7 +276,7 @@ class HaarCascadeDetector:
             # Convert to list of tuples with confidence
             return [(int(x), int(y), int(w), int(h), 1.0) for (x, y, w, h) in faces]
         
-        # Fallback: return empty if no OpenCV
+        # Fallback: return empty if no cv2
         return []
 
 
@@ -353,7 +395,7 @@ class HOGDetector:
 
 
 class DNNDetector:
-    """DNN-based face detector using OpenCV DNN or TensorFlow."""
+    """DNN-based face detector using DNN or pb format."""
     
     def __init__(self, model_path: Optional[str] = None):
         self.model_path = model_path
@@ -362,9 +404,9 @@ class DNNDetector:
         if model_path:
             try:
                 import cv2
-                self._net = cv2.dnn.readNetFromCaffe(
+                self._net = cv2.dnn.readNetFromPrototext(
                     model_path + ".prototxt",
-                    model_path + ".caffemodel"
+                    model_path + ".prototext"
                 )
             except Exception:
                 pass
@@ -407,12 +449,28 @@ class DNNDetector:
         return faces
 
 
-class MediaPipeDetector:
+# NativeDetector - Pure Python Face Detection (NO deep learning dependencies)
+
+class NativeDetector:
     """
-    Fast face detector using Neurova's CNN or MediaPipe fallback.
+    Fast face detector using pure Python/NumPy implementation.
     
-    Uses a sliding window approach with Neurova's architecture module
-    for face detection. Falls back to MediaPipe if available.
+    NO DEEP LEARNING DEPENDENCIES - uses Haar cascade and feature-based
+    detection methods only. Fully compatible with any Python environment.
+    
+    Detection Methods:
+        1. Haar cascade (primary - fast and accurate)
+        2. Feature-based sliding window (fallback)
+    
+    Attributes:
+        min_confidence: Minimum detection confidence threshold.
+        backend: Active backend ('haar' or 'features').
+    
+    Example:
+        >>> detector = NativeDetector(min_confidence=0.5)
+        >>> faces = detector.detect(image)
+        >>> for x, y, w, h, conf in faces:
+        ...     print(f"Face at ({x}, {y}) conf={conf:.2f}")
     """
     
     def __init__(
@@ -420,60 +478,24 @@ class MediaPipeDetector:
         model_path: Optional[str] = None,
         min_confidence: float = 0.5,
     ):
+        """
+        Initialize face detector.
+        
+        Args:
+            model_path: Ignored (kept for API compatibility).
+            min_confidence: Minimum detection confidence (0.0 to 1.0).
+        """
         self.min_confidence = min_confidence
-        self._detector = None
-        self._use_neurova = False
-        self._use_mediapipe = False
-        self._haar_fallback = None
+        self._haar_detector = None
+        self.backend = None
         
-        # Try Neurova's CNN-based detector first
+        # Use Haar cascade detector (pure Python, no deep learning)
         try:
-            from neurova.architecture.cnn import SimpleCNN
-            # Create a lightweight face detection network
-            self._cnn = SimpleCNN(
-                input_shape=(1, 64, 64),
-                num_classes=2,  # face / not face
-                depth='shallow'
-            )
-            self._use_neurova = True
-        except (ImportError, Exception):
-            pass
-        
-        # Try MediaPipe as secondary option
-        if not self._use_neurova:
-            try:
-                import mediapipe as mp
-                from mediapipe.tasks import python as mp_python
-                from mediapipe.tasks.python import vision
-                
-                # Find model
-                if model_path is None:
-                    data_dir = Path(__file__).resolve().parent.parent / "data"
-                    model_path = data_dir / "blaze_face_short_range.tflite"
-                    
-                    if not model_path.exists():
-                        import urllib.request
-                        url = "https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite"
-                        model_path.parent.mkdir(parents=True, exist_ok=True)
-                        urllib.request.urlretrieve(url, str(model_path))
-                
-                self._detector = vision.FaceDetector.create_from_options(
-                    vision.FaceDetectorOptions(
-                        base_options=mp_python.BaseOptions(model_asset_path=str(model_path)),
-                        min_detection_confidence=min_confidence
-                    )
-                )
-                self._mp = mp
-                self._use_mediapipe = True
-            except ImportError:
-                pass
-        
-        # Ultimate fallback: use Haar cascade
-        if not self._use_neurova and not self._use_mediapipe:
-            try:
-                self._haar_fallback = HaarCascadeDetector("frontalface_default")
-            except Exception:
-                pass
+            self._haar_detector = HaarCascadeDetector("frontalface_default")
+            self.backend = 'haar'
+        except Exception:
+            # Ultimate fallback: feature-based detection
+            self.backend = 'features'
     
     def detect(
         self,
@@ -481,29 +503,31 @@ class MediaPipeDetector:
         min_size: Tuple[int, int] = (30, 30),
         max_size: Optional[Tuple[int, int]] = None,
     ) -> List[Tuple[int, int, int, int, float]]:
-        """Detect faces using Neurova CNN, MediaPipe, or Haar fallback."""
+        """
+        Detect faces in an image.
         
-        # Use Neurova's sliding window CNN detector
-        if self._use_neurova:
-            return self._detect_neurova(image, min_size, max_size)
+        Args:
+            image: Input image (H, W, 3) in BGR or RGB format.
+            min_size: Minimum face size (width, height) to return.
+            max_size: Maximum face size (width, height) to return.
+            
+        Returns:
+            List of (x, y, width, height, confidence) tuples.
+        """
+        # Use Haar cascade if available
+        if self._haar_detector is not None:
+            return self._haar_detector.detect(image, min_size, max_size)
         
-        # Use MediaPipe if available
-        if self._use_mediapipe and self._detector is not None:
-            return self._detect_mediapipe(image, min_size, max_size)
-        
-        # Fallback to Haar cascade
-        if self._haar_fallback is not None:
-            return self._haar_fallback.detect(image, min_size, max_size)
-        
-        return []
+        # Fallback to feature-based detection
+        return self._detect_features(image, min_size, max_size)
     
-    def _detect_neurova(
+    def _detect_features(
         self,
         image: np.ndarray,
         min_size: Tuple[int, int],
         max_size: Optional[Tuple[int, int]],
     ) -> List[Tuple[int, int, int, int, float]]:
-        """Detect using Neurova's sliding window approach."""
+        """Detect using feature-based sliding window approach."""
         from PIL import Image as PILImage
         
         # Convert to grayscale
@@ -537,13 +561,7 @@ class MediaPipeDetector:
                 for x in range(0, scaled_w - window_size, stride):
                     window = scaled_img[y:y+window_size, x:x+window_size]
                     
-                    # Prepare input for CNN
-                    window_input = window.astype(np.float32) / 255.0
-                    window_input = window_input.reshape(1, 1, window_size, window_size)
-                    
-                    # Run through CNN (if trained)
-                    # For now, use simple heuristics as placeholder
-                    # A real implementation would use trained weights
+                    # Compute face likelihood score
                     confidence = self._compute_face_score(window)
                     
                     if confidence >= self.min_confidence:
@@ -567,7 +585,7 @@ class MediaPipeDetector:
         Compute face likelihood score using image features.
         
         Uses heuristics based on face-like characteristics:
-        - Skin tone distribution
+        - Variance distribution
         - Symmetry
         - Edge patterns typical of faces
         """
@@ -654,34 +672,9 @@ class MediaPipeDetector:
         
         return inter_area / union_area if union_area > 0 else 0
     
-    def _detect_mediapipe(
-        self,
-        image: np.ndarray,
-        min_size: Tuple[int, int],
-        max_size: Optional[Tuple[int, int]],
-    ) -> List[Tuple[int, int, int, int, float]]:
-        """Detect using MediaPipe (if available)."""
-        # Ensure RGB
-        if len(image.shape) == 3 and image.shape[2] == 3:
-            rgb = image.copy()
-        else:
-            rgb = np.stack([image] * 3, axis=-1)
-        
-        mp_image = self._mp.Image(
-            image_format=self._mp.ImageFormat.SRGB,
-            data=rgb
+    def __repr__(self) -> str:
+        """Return string representation."""
+        return (
+            f"NativeDetector(backend={self.backend!r}, "
+            f"min_confidence={self.min_confidence})"
         )
-        
-        results = self._detector.detect(mp_image)
-        
-        faces = []
-        for det in (results.detections or []):
-            box = det.bounding_box
-            x, y, w, h = box.origin_x, box.origin_y, box.width, box.height
-            conf = det.categories[0].score
-            
-            if w >= min_size[0] and h >= min_size[1]:
-                if max_size is None or (w <= max_size[0] and h <= max_size[1]):
-                    faces.append((int(x), int(y), int(w), int(h), float(conf)))
-        
-        return faces

@@ -1,15 +1,15 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Version information for Neurova package"""
 
-__version__ = "0.0.2"
-__version_info__ = (0, 0, 2)
+__version__ = "0.0.6"
+__version_info__ = (0, 0, 6)
 
 # build information
 __build__ = "stable"
-__date__ = "2026-02-04"
+__date__ = "2025-02-04"
 
 # library metadata
 NEUROVA_VERSION = __version__
@@ -32,6 +32,6 @@ def get_build_info():
         "date": __date__,
         "version_info": __version_info__,
     }
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

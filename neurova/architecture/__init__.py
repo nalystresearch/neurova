@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Neurova Architecture Module
@@ -605,10 +605,8 @@ __all__ = [
 def available_architectures():
     """Print available architectures and their use cases."""
     print("""
-================================================================================
-                        NEUROVA ARCHITECTURE MODULE v0.2.0
-                           100+ Neural Network Architectures
-================================================================================
+neurova architecture module v0.2.0
+100+ neural network architectures
 
 BASIC/FOUNDATIONAL NETWORKS
 ---------------------------
@@ -712,9 +710,7 @@ SPECIALIZED ARCHITECTURES
   HopfieldNetwork       - Associative memory
   RestrictedBoltzmannMachine - Energy-based generative
 
-================================================================================
-QUICK START EXAMPLES
-================================================================================
+quick start examples
 
 # MLP for classification
 >>> from neurova.architecture import MLP
@@ -743,16 +739,15 @@ QUICK START EXAMPLES
 >>> search.fit(X, y, input_shape=100, output_shape=10)
 >>> best_model = search.best_model_
 
-================================================================================
 """)
 
 
 def quick_start():
     """Print quick start guide."""
     print("""
-╔══════════════════════════════════════════════════════════════════╗
-║              NEUROVA ARCHITECTURE - QUICK START                   ║
-╠══════════════════════════════════════════════════════════════════╣
+
+              NEUROVA ARCHITECTURE - QUICK START                   
+
 
 1. IMPORT WHAT YOU NEED
    >>> from neurova.architecture import MLP, LSTM, create_cnn
@@ -792,5 +787,5 @@ def quick_start():
    >>> search.fit(X_train, y_train, input_shape=X.shape[1], output_shape=num_classes)
    >>> best_model = search.best_model_
 
-╚══════════════════════════════════════════════════════════════════╝
+
 """)

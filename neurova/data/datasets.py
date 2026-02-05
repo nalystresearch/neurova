@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Built-in datasets for Neurova.
@@ -244,7 +244,7 @@ def load_sample_image(name: str = "lena") -> np.ndarray:
         try:
             from neurova import nvc as cv2
         except ImportError:
-            raise ImportError("OpenCV or neurova.nvc is required")
+            raise ImportError("cv2 or neurova.nvc is required")
     
     # Try common extensions
     for ext in ['.png', '.jpg', '.jpeg']:

@@ -6,14 +6,14 @@ This directory contains model weights, configuration files, and shader assets fo
 
 ```
 models/
-├── classification/     # Image classification models
-├── detection/          # Object detection models
-├── segmentation/       # Semantic/instance segmentation
-├── face/               # Face detection and recognition
-├── text/               # OCR and text detection
-├── pose/               # Human pose estimation
-├── depth/              # Depth estimation models
-└── shaders/            # GPU shader programs
+ classification/     # Image classification models
+ detection/          # Object detection models
+ segmentation/       # Semantic/instance segmentation
+ face/               # Face detection and recognition
+ text/               # OCR and text detection
+ pose/               # Human pose estimation
+ depth/              # Depth estimation models
+ shaders/            # GPU shader programs
 ```
 
 ## Supported Formats
@@ -49,7 +49,7 @@ models/
 
 | Model            | Input Size | mAP  | Speed (ms) |
 | ---------------- | ---------- | ---- | ---------- |
-| yolov8n          | 640x640    | 37.3 | 4.2        |
+| nvdetect_nano          | 640x640    | 37.3 | 4.2        |
 | ssd_mobilenet_v2 | 300x300    | 22.0 | 5.1        |
 | nanodet          | 320x320    | 23.5 | 3.8        |
 

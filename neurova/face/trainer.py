@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Face Trainer for training custom face detection and recognition models.
@@ -145,7 +145,7 @@ class FaceTrainer:
         """
         Train a custom cascade classifier for face detection.
         
-        Note: This requires OpenCV with opencv_traincascade tool.
+        Note: This requires the traincascade tool.
         
         Args:
             positive_dir: Directory with positive (face) images.
@@ -199,7 +199,7 @@ class FaceTrainer:
         try:
             # Generate vector file
             cmd = [
-                "opencv_createsamples",
+                "nv_createsamples",
                 "-info", str(pos_file),
                 "-vec", str(vec_file),
                 "-w", str(width),
@@ -214,7 +214,7 @@ class FaceTrainer:
             
             if result.returncode != 0:
                 if verbose:
-                    print(f"Warning: opencv_createsamples failed: {result.stderr}")
+                    print(f"Warning: nv_createsamples failed: {result.stderr}")
                     print("Trying alternative method...")
                 
                 # Use Python-based sample creation
@@ -222,7 +222,7 @@ class FaceTrainer:
         
         except FileNotFoundError:
             if verbose:
-                print("opencv_createsamples not found. Using Python fallback.")
+                print("nv_createsamples not found. Using Python fallback.")
             self._create_samples_python(pos_images, vec_file, width, height)
         
         # Train cascade
@@ -230,7 +230,7 @@ class FaceTrainer:
         
         try:
             cmd = [
-                "opencv_traincascade",
+                "nv_traincascade",
                 "-data", str(cascade_dir),
                 "-vec", str(vec_file),
                 "-bg", str(neg_file),
@@ -267,11 +267,11 @@ class FaceTrainer:
                 
         except FileNotFoundError:
             if verbose:
-                print("opencv_traincascade not found.")
-                print("Please install OpenCV with training tools.")
+                print("nv_traincascade not found.")
+                print("Please install neurova training tools.")
             
             return {
-                'error': 'opencv_traincascade not found',
+                'error': 'nv_traincascade not found',
                 'cascade_path': None,
             }
     

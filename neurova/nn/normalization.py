@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Normalization, Dropout, Recurrent, Attention, Embedding - Placeholders."""
 from neurova.nn.layers import Module
@@ -26,6 +26,6 @@ class InstanceNorm1d(Module):
 class InstanceNorm2d(Module):
     def __init__(self, num_features): super().__init__()
     def forward(self, x): return x
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

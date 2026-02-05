@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Color space conversion operations"""
 
@@ -431,6 +431,6 @@ def convert_color_space(image: np.ndarray,
     raise ColorSpaceError(
         f"Conversion from {from_space.value} to {to_space.value} is not supported"
     )
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 GPU Utility Functions for Image/Video Processing.
@@ -401,6 +401,6 @@ def normalize_gpu(image, mean=None, std=None):
 
     normalized = (image - mean) / (std + 1e-8)
     return normalized
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

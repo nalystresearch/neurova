@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Placeholder module (legacy integration removed)."""
 
@@ -10,6 +10,6 @@ class HaarCascadeLegacy:  # pragma: no cover - retained for backward compatibili
 
     def __init__(self, *args, **kwargs) -> None:
         raise RuntimeError("Legacy cascade removed. Use neurova.nvc.CascadeClassifier.")
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

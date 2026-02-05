@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 2: Image I/O and Transforms
-====================================
+
 
 This chapter covers:
 - Reading and writing images
@@ -19,9 +19,9 @@ Author: Neurova Team
 import numpy as np
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 2: Image I/O and Transforms")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import io, transform, core, datasets
@@ -193,4 +193,4 @@ print("   Resize, rotate, flip images")
 print("   Crop and pad images")
 print("   Apply affine transformations")
 print("   Normalize images for neural networks")
-print("=" * 60)
+print("")

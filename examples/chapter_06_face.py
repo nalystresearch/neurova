@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 6: Face Detection & Recognition
-========================================
+
 
 This chapter covers:
 - FaceDetector class with multiple backends
@@ -21,9 +21,9 @@ Author: Neurova Team
 import numpy as np
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 6: Face Detection & Recognition")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import datasets, core
@@ -43,7 +43,7 @@ print("      - 'haar': Haar Cascade (fast, good for frontal faces)")
 print("      - 'lbp': LBP Cascade (faster, slightly less accurate)")
 print("      - 'hog': HOG + Linear SVM (moderate speed, good accuracy)")
 print("      - 'cnn': Deep CNN (slower, best accuracy)")
-print("      - 'mediapipe': MediaPipe BlazeFace (requires mediapipe)")
+print("      - 'native': Native BlazeFace detector")
 
 # 6.2 haar cascade face detection
 print(f"\n6.2 Haar Cascade Face Detection")
@@ -103,12 +103,12 @@ print(f"    Method: {dnn_detector.method}")
 dnn_faces = dnn_detector.detect(test_image)
 print(f"    Detected with DNN: {len(dnn_faces)}")
 
-# 6.5 mediapipe-style detection
-print(f"\n6.5 MediaPipe-style Detection")
+# 6.5 native-style detection
+print(f"\n6.5 Native-style Detection")
 
-mp_detector = FaceDetector(method='mediapipe')
+mp_detector = FaceDetector(method='native')
 print(f"    Method: {mp_detector.method}")
-print("    Note: Falls back to Neurova CNN if mediapipe not installed")
+print("    Note: Falls back to Neurova CNN if native backend unavailable")
 
 mp_faces = mp_detector.detect(test_image)
 print(f"    Detected: {len(mp_faces)}")
@@ -384,4 +384,4 @@ print("   Used FaceTrainer for model training")
 print("   Built complete detection + recognition pipeline")
 print("   Implemented face verification (1:1)")
 print("   Applied face preprocessing utilities")
-print("=" * 60)
+print("")

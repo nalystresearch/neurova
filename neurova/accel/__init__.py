@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Neurova accelerated backends."""
 
@@ -12,6 +12,6 @@ except Exception:  # pragma: no cover - optional binding
     HAS_CUDA_NATIVE = False
 
 __all__ = ["cuda_native", "HAS_CUDA_NATIVE"]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

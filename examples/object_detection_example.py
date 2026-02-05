@@ -1,25 +1,25 @@
 #!/usr/bin/env python
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Neurova Object Detection Example
 
 This example demonstrates how to use Neurova's object detection module
-for training and inference, similar to YOLO.
+for training and inference, for object detection.
 
-Dataset Structure (YOLO format):
+Dataset Structure (normalized box format):
     datasets/
-    └── your_dataset/
-        ├── data.yaml          # Optional config file
-        ├── images/
-        │   ├── train/         # Training images (.jpg, .png)
-        │   └── val/           # Validation images
-        └── labels/
-            ├── train/         # Label files (.txt)
-            └── val/           # Validation labels
+     your_dataset/
+         data.yaml          # Optional config file
+         images/
+            train/         # Training images (.jpg, .png)
+            val/           # Validation images
+         labels/
+             train/         # Label files (.txt)
+             val/           # Validation labels
 
 Label Format (per line in .txt file):
     <class_id> <x_center> <y_center> <width> <height>
@@ -40,17 +40,17 @@ from neurova.object_detection import (
     Detection,
     DetectionResult,
     create_data_yaml,
-    parse_yolo_label,
-    create_yolo_label,
+    parse_detection_label,
+    create_detection_label,
     verify_dataset,
 )
 
 
 def example_create_dataset():
     """Example: Create a dataset structure programmatically."""
-    print("=" * 60)
+    print("")
     print("Example 1: Creating Dataset Structure")
-    print("=" * 60)
+    print("")
     
 # define dataset path
     dataset_dir = Path("./my_detection_dataset")
@@ -84,10 +84,10 @@ def example_create_dataset():
 
 
 def example_create_labels():
-    """Example: Create YOLO format labels."""
-    print("=" * 60)
-    print("Example 2: Creating YOLO Labels")
-    print("=" * 60)
+    """Example: Create normalized box format labels."""
+    print("")
+    print("Example 2: Creating Detection Labels")
+    print("")
     
     # Example: Create label for an image
     labels = [
@@ -99,7 +99,7 @@ def example_create_labels():
     
 # save to file
     label_path = Path("./example_label.txt")
-    create_yolo_label(label_path, labels)
+    create_detection_label(label_path, labels)
     
     print(f"Created label file: {label_path}")
     print("\nLabel content:")
@@ -107,7 +107,7 @@ def example_create_labels():
         print(f.read())
     
 # parse it back
-    parsed = parse_yolo_label(label_path)
+    parsed = parse_detection_label(label_path)
     print("Parsed labels:")
     for cls_id, x, y, w, h in parsed:
         print(f"  Class {cls_id}: center=({x:.2f}, {y:.2f}), size=({w:.2f}, {h:.2f})")
@@ -119,9 +119,9 @@ def example_create_labels():
 
 def example_load_dataset():
     """Example: Load an existing dataset."""
-    print("=" * 60)
+    print("")
     print("Example 3: Loading Detection Dataset")
-    print("=" * 60)
+    print("")
     
 # create a small test dataset in memory
     dataset_dir = Path("./test_dataset")
@@ -134,7 +134,7 @@ def example_load_dataset():
     img.save(dataset_dir / "images" / "train" / "test_image.jpg")
     
 # create corresponding label
-    create_yolo_label(
+    create_detection_label(
         dataset_dir / "labels" / "train" / "test_image.txt",
         [(0, 0.5, 0.5, 0.3, 0.4)]
     )
@@ -156,9 +156,9 @@ def example_load_dataset():
 
 def example_create_detector():
     """Example: Create object detector."""
-    print("=" * 60)
+    print("")
     print("Example 4: Creating Object Detector")
-    print("=" * 60)
+    print("")
     
 # define your classes
     class_names = ["person", "car", "dog", "bicycle", "cat"]
@@ -178,9 +178,9 @@ def example_create_detector():
 
 def example_detect_objects():
     """Example: Run object detection on an image."""
-    print("=" * 60)
+    print("")
     print("Example 5: Running Object Detection")
-    print("=" * 60)
+    print("")
     
 # create detector
     detector = ObjectDetector(
@@ -212,9 +212,9 @@ def example_detect_objects():
 
 def example_training_workflow():
     """Example: Full training workflow."""
-    print("=" * 60)
+    print("")
     print("Example 6: Training Workflow")
-    print("=" * 60)
+    print("")
     
     print("""
 # Full training example (requires actual dataset):
@@ -260,9 +260,9 @@ for det in results:
 
 def example_dataset_verification():
     """Example: Verify dataset integrity."""
-    print("=" * 60)
+    print("")
     print("Example 7: Dataset Verification")
-    print("=" * 60)
+    print("")
     
 # create a test dataset
     dataset_dir = Path("./verify_test")
@@ -276,7 +276,7 @@ def example_dataset_verification():
         img.save(dataset_dir / "images" / "train" / f"img_{i}.jpg")
         
         if i < 2:  # Only create labels for first 2 images
-            create_yolo_label(
+            create_detection_label(
                 dataset_dir / "labels" / "train" / f"img_{i}.txt",
                 [(0, 0.5, 0.5, 0.3, 0.3)]
             )
@@ -322,13 +322,13 @@ def main():
     
     print("\n" + "=" * 60)
     print("All examples completed!")
-    print("=" * 60)
+    print("")
 
 
 if __name__ == "__main__":
     main()
 
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

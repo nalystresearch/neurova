@@ -1,11 +1,11 @@
-/* copyright (c) 2025 @analytics withharry
+/* Copyright (c) 2026 @squid consultancy group (scg)
  * all rights reserved.
- * licensed under the mit license.
+ * licensed under the apache license 2.0.
  */
 
 /*
  * Neurova Native Camera Capture - macOS AVFoundation Implementation
- * High-performance camera interface using AVFoundation (like OpenCV)
+ * High-performance camera interface using AVFoundation (high-performance)
  */
 
 #ifdef __APPLE__

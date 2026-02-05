@@ -1,7 +1,7 @@
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Object Detection Utility Functions.
@@ -699,6 +699,6 @@ def augment_detection(
     return image, boxes, class_ids
 
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

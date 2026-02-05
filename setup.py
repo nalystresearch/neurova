@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Neurova - Advanced Image Processing and Deep Learning Library
@@ -63,16 +63,16 @@ extras_require["all"] = list(set(sum(extras_require.values(), [])))
 setup(
     name="neurova",
     version=version_info["__version__"],
-    author="Neurova Development Team",
-    author_email="dev@neurova.ai",
+    author="Squid Consultancy Group (SCG)",
+    author_email="contact@nalystresearch.com",
     description="Advanced Image Processing and Deep Learning Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/neurova/neurova",
+    url="https://github.com/nalystresearch/neurova",
     project_urls={
-        "Bug Tracker": "https://github.com/neurova/neurova/issues",
-        "Documentation": "https://neurova.readthedocs.io",
-        "Source Code": "https://github.com/neurova/neurova",
+        "Bug Tracker": "https://github.com/nalystresearch/neurova/issues",
+        "Documentation": "https://github.com/nalystresearch/neurova",
+        "Source Code": "https://github.com/nalystresearch/neurova",
     },
     packages=find_packages(exclude=["tests", "tests.*", "examples", "examples.*"]),
     package_data={
@@ -88,7 +88,7 @@ setup(
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
@@ -106,6 +106,6 @@ setup(
         "Typing :: Typed",
     ],
     keywords="image-processing computer-vision deep-learning neural-networks machine-learning",
-    license="MIT",
+    license="Apache-2.0",
     zip_safe=False,
 )

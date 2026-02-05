@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 7: Machine Learning with Neurova
-==========================================
+
 
 This chapter covers:
 - Loading tabular datasets
@@ -22,9 +22,9 @@ Author: Neurova Team
 import numpy as np
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 7: Machine Learning with Neurova")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import datasets
@@ -439,4 +439,4 @@ print("   Used PCA for dimensionality reduction")
 print("   Evaluated models with multiple metrics")
 print("   Performed cross-validation")
 print("   Built complete ML pipeline")
-print("=" * 60)
+print("")

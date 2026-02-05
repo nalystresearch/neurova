@@ -1,21 +1,21 @@
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
-YOLO-format Dataset Loader for Object Detection.
+Dataset Loader for Object Detection.
 
-Supports the standard YOLO directory structure:
+Supports the standard detection directory structure:
     datasets/
-    └── your_dataset/
-        ├── data.yaml          # Optional config file
-        ├── images/
-        │   ├── train/         # Training images
-        │   └── val/           # Validation images
-        └── labels/
-            ├── train/         # Training labels (.txt)
-            └── val/           # Validation labels (.txt)
+     your_dataset/
+         data.yaml          # Optional config file
+         images/
+            train/         # Training images
+            val/           # Validation images
+         labels/
+             train/         # Training labels (.txt)
+             val/           # Validation labels (.txt)
 
 Label format (per line):
     <class_id> <x_center> <y_center> <width> <height>
@@ -39,7 +39,7 @@ IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
 
 @dataclass
 class DataConfig:
-    """Dataset configuration (similar to YOLO data.yaml).
+    """Dataset configuration for object detection.
     
     Attributes:
         path: Root path to dataset
@@ -187,9 +187,9 @@ def load_data_yaml(yaml_path: Union[str, Path]) -> DataConfig:
     )
 
 
-def parse_yolo_label(label_path: Union[str, Path]) -> List[Tuple[int, float, float, float, float]]:
+def parse_detection_label(label_path: Union[str, Path]) -> List[Tuple[int, float, float, float, float]]:
     """
-    Parse a YOLO format label file.
+    Parse a normalized bounding box label file.
     
     Args:
         label_path: Path to label .txt file
@@ -226,12 +226,12 @@ def parse_yolo_label(label_path: Union[str, Path]) -> List[Tuple[int, float, flo
     return labels
 
 
-def create_yolo_label(
+def create_detection_label(
     label_path: Union[str, Path],
     labels: List[Tuple[int, float, float, float, float]],
 ) -> None:
     """
-    Create a YOLO format label file.
+    Create a normalized bounding box label file.
     
     Args:
         label_path: Path to save label file
@@ -275,7 +275,7 @@ class DetectionSample:
         
         # Load labels
         if self.label_path:
-            labels = parse_yolo_label(self.label_path)
+            labels = parse_detection_label(self.label_path)
             if labels:
                 self.class_ids = np.array([l[0] for l in labels], dtype=np.int32)
                 self.boxes = np.array([[l[1], l[2], l[3], l[4]] for l in labels], dtype=np.float32)
@@ -291,9 +291,9 @@ class DetectionSample:
 
 class DetectionDataset:
     """
-    YOLO-format dataset loader for object detection.
+    Dataset loader for object detection.
     
-    Supports the standard YOLO directory structure with automatic label discovery.
+    Supports the standard directory structure with automatic label discovery.
     
     Args:
         data_dir: Root directory of dataset
@@ -403,7 +403,7 @@ class DetectionDataset:
         
         for sample in self.train_samples + self.val_samples:
             if sample.label_path:
-                labels = parse_yolo_label(sample.label_path)
+                labels = parse_detection_label(sample.label_path)
                 for label in labels:
                     class_ids.add(label[0])
         
@@ -699,7 +699,7 @@ def verify_dataset(data_dir: Union[str, Path]) -> Dict[str, Any]:
                 results['stats']['total_labels'] += 1
                 
                 # Parse label
-                labels = parse_yolo_label(lbl)
+                labels = parse_detection_label(lbl)
                 results['stats']['boxes_per_image'].append(len(labels))
                 
                 for class_id, *_ in labels:
@@ -723,6 +723,6 @@ def verify_dataset(data_dir: Union[str, Path]) -> Dict[str, Any]:
     return results
 
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Core array operations and utilities"""
 
@@ -355,6 +355,6 @@ def calculate_output_size(input_size: int, kernel_size: int, stride: int = 1,
     """
     effective_kernel = dilation * (kernel_size - 1) + 1
     return (input_size + 2 * padding - effective_kernel) // stride + 1
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

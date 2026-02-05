@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.imgproc.color - Color space conversion functions
@@ -683,6 +683,6 @@ __all__ = [
     # XYZ
     "COLOR_BGR2XYZ", "COLOR_RGB2XYZ", "COLOR_XYZ2BGR", "COLOR_XYZ2RGB",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 1: Collect Face Images from Webcam
-=========================================
+
 
 This script captures face images from your webcam and saves them
 to the training folder.
@@ -44,9 +44,9 @@ def collect_faces(name: str, count: int = 20, device: int = 0):
         count: Number of images to capture
         device: Camera device ID
     """
-    print("=" * 60)
+    print("")
     print("STEP 1: COLLECT FACE IMAGES")
-    print("=" * 60)
+    print("")
     
 # create person folder
     person_dir = TRAIN_DIR / name
@@ -60,12 +60,12 @@ def collect_faces(name: str, count: int = 20, device: int = 0):
     print(f" Existing images: {len(existing)}")
     print(f" Target: {count} new images")
     
-# try to import opencv for webcam
+# try to import cv2 for webcam
     try:
         import cv2
         use_cv2 = True
     except ImportError:
-        print("\n  OpenCV not installed. Using Neurova's VideoCapture...")
+        print("\n  cv2 not installed. Using Neurova's VideoCapture...")
         use_cv2 = False
     
 # load face detector
@@ -78,16 +78,16 @@ def collect_faces(name: str, count: int = 20, device: int = 0):
     print("  - Move your head slightly between captures")
     print("  - Press 'q' to quit early")
     print("  - Press 's' to skip a frame")
-    print("-" * 60)
+    print("")
     
     if use_cv2:
-        collect_with_opencv(detector, person_dir, name, count, start_num, device)
+        collect_with_nv(detector, person_dir, name, count, start_num, device)
     else:
         collect_with_neurova(detector, person_dir, name, count, start_num, device)
 
 
-def collect_with_opencv(detector, person_dir, name, count, start_num, device):
-    """Collect faces using OpenCV."""
+def collect_with_nv(detector, person_dir, name, count, start_num, device):
+    """Collect faces using cv2."""
     import cv2
     
     cap = cv2.VideoCapture(device)
@@ -189,7 +189,7 @@ def collect_with_neurova(detector, person_dir, name, count, start_num, device):
     cap = VideoCapture(device)
     
     print("\n Using Neurova VideoCapture...")
-    print("  No live preview (install OpenCV for preview)")
+    print("  No live preview (install cv2 for preview)")
     print("\nCapturing frames automatically...")
     
     captured = 0

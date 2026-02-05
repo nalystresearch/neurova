@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 GPU Acceleration Demo for Neurova
@@ -27,7 +27,7 @@ print("="*70)
 # 1. CHECK GPU AVAILABILITY
 
 print("\n DEVICE INFORMATION")
-print("-" * 70)
+print("")
 
 if nv.cuda_is_available():
     print(" GPU detected!")
@@ -74,7 +74,7 @@ operations = [
 
 print("\n Running image processing benchmarks...")
 print(f"{'Operation':<25} {'Time (ms)':<15} {'Device':<10}")
-print("-" * 70)
+print("")
 
 for op_name, op_func in operations:
     try:
@@ -156,7 +156,7 @@ print("\n Running ML operations...")
 try:
     from neurova.ml import PCA
     
-    print("\nTesting PCA (100 � 20 dimensions)...")
+    print("\nTesting PCA (100  20 dimensions)...")
     start = time.time()
     pca = PCA(n_components=20)
     X_reduced = pca.fit_transform(X_device)
@@ -190,7 +190,7 @@ except Exception as e:
 # 5. DEEP LEARNING ON GPU
 
 print("\n" + "="*70)
-print("� DEEP LEARNING BENCHMARK")
+print(" DEEP LEARNING BENCHMARK")
 print("="*70)
 
 try:
@@ -199,7 +199,7 @@ try:
     from neurova.nn.optim import SGD
     from neurova.nn.loss import MSELoss
     
-    print("\nCreating neural network (784 � 256 � 10)...")
+    print("\nCreating neural network (784  256  10)...")
     
     # create model
     model = Sequential(
@@ -263,7 +263,7 @@ if nv.get_device() == 'cuda':
     print(f"   Total: {memory_info['total_gb']:.2f} GB")
     print(f"   Percentage: {memory_info['used_gb']/memory_info['total_gb']*100:.1f}%")
     
-    print(f"\n� Clearing GPU cache...")
+    print(f"\n Clearing GPU cache...")
     nv.empty_cache()
     
     memory_info_after = nv.get_memory_usage()
@@ -275,7 +275,7 @@ else:
 # 7. DEVICE SWITCHING
 
 print("\n" + "="*70)
-print("� DEVICE SWITCHING DEMO")
+print(" DEVICE SWITCHING DEMO")
 print("="*70)
 
 print("\nDemonstrating temporary device switching...")

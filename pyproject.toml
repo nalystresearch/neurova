@@ -1,6 +1,6 @@
-# copyright (c) 2025 @analytics withharry
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 [build-system]
 requires = [
@@ -13,16 +13,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "neurova"
-version = "0.0.2"
+version = "0.0.6"
 description = "Complete computer vision and deep learning toolkit with GPU acceleration"
 readme = "README.md"
 requires-python = ">=3.8"
-license = "MIT"
+license = "Apache-2.0"
 authors = [
-    {name = "@analytics withharry", email = "contact@nalystresearch.com"}
+    {name = "Squid Consultancy Group (SCG)", email = "contact@nalystresearch.com"}
 ]
 maintainers = [
-    {name = "@analytics withharry", email = "contact@nalystresearch.com"}
+    {name = "Squid Consultancy Group (SCG)", email = "contact@nalystresearch.com"}
 ]
 keywords = [
     "image-processing",
@@ -60,7 +60,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Development tools
+# development tools
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
@@ -68,20 +68,25 @@ dev = [
     "flake8>=6.0.0",
     "mypy>=1.0.0",
 ]
-# Documentation
+# documentation
 docs = [
     "sphinx>=5.0.0",
     "sphinx-rtd-theme>=1.0.0",
 ]
-# Visualization (matplotlib for plotting)
+# visualization (matplotlib for plotting)
 viz = [
     "matplotlib>=3.5.0",
 ]
-# GPU acceleration
+# gpu acceleration
 gpu = [
     "cupy>=10.0.0",
 ]
-# Full installation (all optional dependencies)
+# solutions module (face mesh, hands, pose, etc)
+# uses ai-edge-litert - google's lightweight tflite runtime (~13mb vs tensorflow ~500mb)
+solutions = [
+    "ai-edge-litert>=2.0.0",
+]
+# full installation (all optional dependencies)
 all = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
@@ -107,7 +112,13 @@ include = ["neurova*"]
 exclude = ["tests*"]
 
 [tool.setuptools.package-data]
-neurova = ["py.typed", "data/**/*"]
+neurova = [
+    "py.typed",
+    "data/**/*",
+    "*.tflite",
+    "face/*.tflite",
+    "solutions/models/*.tflite",
+]
 
 [tool.black]
 line-length = 100

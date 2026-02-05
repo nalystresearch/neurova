@@ -1,24 +1,24 @@
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Neurova Object Detection Module.
 
-Provides YOLO-style object detection with training and inference capabilities.
+Provides single-stage object detection with training and inference capabilities.
 
-Dataset Structure (YOLO format):
+Dataset Structure:
     datasets/
-    └── your_dataset/
-        ├── images/
-        │   ├── train/      # Training images (.jpg, .png)
-        │   └── val/        # Validation images
-        └── labels/
-            ├── train/      # Label files (.txt) - SAME name as images
-            └── val/        # Validation labels
+     your_dataset/
+         images/
+            train/      # Training images (.jpg, .png)
+            val/        # Validation images
+         labels/
+             train/      # Label files (.txt) - SAME name as images
+             val/        # Validation labels
 
-Label Format (YOLO):
+Label Format (normalized bounding box):
     <class_id> <x_center> <y_center> <width> <height>
     All values normalized (0-1) relative to image dimensions.
 
@@ -54,8 +54,8 @@ from neurova.object_detection.dataset import (
     DataConfig,
     create_data_yaml,
     load_data_yaml,
-    parse_yolo_label,
-    create_yolo_label,
+    parse_detection_label,
+    create_detection_label,
     split_dataset,
     verify_dataset,
 )
@@ -100,8 +100,8 @@ __all__ = [
     "DataConfig",
     "create_data_yaml",
     "load_data_yaml",
-    "parse_yolo_label",
-    "create_yolo_label",
+    "parse_detection_label",
+    "create_detection_label",
     "split_dataset",
     "verify_dataset",
     # Detector
@@ -133,6 +133,6 @@ __all__ = [
 ]
 
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

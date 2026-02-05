@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
 *$py.class
 
 # C extensions
@@ -136,3 +137,21 @@ Thumbs.db
 
 # Project specific
 opencv-python-4.x/
+my_detection_dataset/
+models/*.tflite
+
+# Test outputs and reports (keep in repo but exclude from dist)
+tests/reports/*.md
+htmlcov/
+.coverage
+
+# C++ build artifacts
+*.so
+*.dylib
+src/*.o
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+
+# Temp files from macOS duplicates
+.!*

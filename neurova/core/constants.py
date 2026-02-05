@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Constants and enumerations for Neurova library"""
 
@@ -205,6 +205,6 @@ CASCADE_SMILE = "haarcascade_smile"
 # color conversion codes
 RGB_TO_GRAY_WEIGHTS = (0.299, 0.587, 0.114)  # Standard luminance weights
 BGR_TO_GRAY_WEIGHTS = (0.114, 0.587, 0.299)  # BGR order
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

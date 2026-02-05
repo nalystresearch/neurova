@@ -1,18 +1,18 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
-===============================================================================
+
                         NEUROVA LIBRARY EXAMPLES
                     Complete Feature Documentation
-===============================================================================
+
 
 Welcome to the Neurova library examples! This collection demonstrates all
 features of the Neurova computer vision and machine learning library.
 
 CHAPTER OVERVIEW
-================
+
 
 Chapter 1: Getting Started
     - Installation and imports
@@ -112,7 +112,7 @@ Chapter 12: GPU & Performance
     - Optimization tips
 
 RUNNING EXAMPLES
-================
+
 
 To run any chapter:
 
@@ -123,7 +123,7 @@ For example:
     python examples/chapter_07_machine_learning.py
 
 AVAILABLE DATASETS
-==================
+
 
 Neurova includes these datasets for testing:
 
@@ -153,7 +153,7 @@ Detection Data:
     - hogcascades/
 
 QUICK START
-===========
+
 
     import neurova as nv
     from neurova import datasets, filters, detection
@@ -175,7 +175,7 @@ QUICK START
 Author: Neurova Team
 Version: See neurova.__version__
 License: MIT
-===============================================================================
+
 """
 
 import os
@@ -193,13 +193,13 @@ def main():
     ])
     
     print("\nAvailable Chapter Files:")
-    print("-" * 50)
+    print("")
     for chapter in chapters:
         print(f"   {chapter}")
     
     print("\n" + "-" * 50)
     print("Run with: python examples/<chapter_file>.py")
-    print("=" * 50)
+    print("")
 
 if __name__ == '__main__':
     main()

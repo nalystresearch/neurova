@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 4: Evaluate Model
-=======================
+
 
 This script evaluates the trained model on test and validation sets:
 1. Loads the trained model
@@ -155,9 +155,9 @@ def evaluate_model(method: str = 'lbph'):
     """
     Evaluate trained model.
     """
-    print("=" * 60)
+    print("")
     print("STEP 4: EVALUATE MODEL")
-    print("=" * 60)
+    print("")
     
     # Step 1: Load model
     print("\n Loading trained model...")
@@ -316,7 +316,7 @@ def evaluate_model(method: str = 'lbph'):
 # summary
     print("\n" + "=" * 60)
     print("EVALUATION SUMMARY")
-    print("=" * 60)
+    print("")
     
     if test_metrics:
         print(f"\n   TEST SET:")

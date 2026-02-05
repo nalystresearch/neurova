@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Neurova neural: loss modules."""
 
@@ -27,6 +27,6 @@ class CrossEntropyLoss(Module):
 
     def forward(self, logits: Tensor, target: np.ndarray) -> Tensor:
         return cross_entropy(logits, target, reduction=self.reduction)
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Step 1: Annotate Images
@@ -15,7 +15,7 @@ How to use:
     python 01_annotate_images.py --folder ./images  (Annotate all images in folder)
     python 01_annotate_images.py --image test.jpg   (Annotate single image)
 
-Controls when using OpenCV mode:
+Controls when using graphical mode:
     Left click and drag to draw a bounding box
     Press n for next image
     Press p for previous image
@@ -66,15 +66,15 @@ class BoundingBoxAnnotator:
         output_dir = output_dir or image_path.parent.parent / "annotations"
         output_dir.mkdir(parents=True, exist_ok=True)
         
-# try to use opencv for the graphical interface
+# try to use cv2 for the graphical interface
         try:
             import cv2
-            return self._annotate_opencv(image_path, output_dir)
+            return self._annotate_nv(image_path, output_dir)
         except ImportError:
             return self._annotate_text(image_path, output_dir)
     
-    def _annotate_opencv(self, image_path, output_dir):
-        """Annotate using the OpenCV graphical interface."""
+    def _annotate_nv(self, image_path, output_dir):
+        """Annotate using the graphical interface."""
         import cv2
         
         image = cv2.imread(str(image_path))
@@ -188,7 +188,7 @@ class BoundingBoxAnnotator:
         return self._create_annotation(image_path, width, height)
     
     def _annotate_text(self, image_path, output_dir):
-        """Text-based annotation when OpenCV is not available."""
+        """Text-based annotation when cv2 is not available."""
         from PIL import Image
         
         with Image.open(image_path) as img:
@@ -271,7 +271,7 @@ def annotate_folder(folder, class_names=None):
     
     print("")
     print("Found " + str(len(images)) + " images in " + str(folder))
-    print("=" * 60)
+    print("")
     
     for i, image_path in enumerate(images):
         print("")
@@ -290,9 +290,9 @@ def main():
     
     args = parser.parse_args()
     
-    print("=" * 60)
+    print("")
     print("STEP 1: ANNOTATE IMAGES")
-    print("=" * 60)
+    print("")
     
 # use provided classes or default ones
     class_names = args.classes if args.classes else CLASS_NAMES[1:]
@@ -333,6 +333,6 @@ if __name__ == "__main__":
     main()
 
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

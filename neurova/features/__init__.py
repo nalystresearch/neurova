@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Feature detection and description for Neurova"""
 
@@ -71,6 +71,6 @@ __all__ = [
     "FAST_FEATURE_DETECTOR_TYPE_5_8", "FAST_FEATURE_DETECTOR_TYPE_7_12",
     "FAST_FEATURE_DETECTOR_TYPE_9_16",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

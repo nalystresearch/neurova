@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 9: Dataset Loading & Management
-========================================
+
 
 This chapter covers:
 - Loading built-in datasets
@@ -22,9 +22,9 @@ Author: Neurova Team
 import numpy as np
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 9: Dataset Loading & Management")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import datasets
@@ -454,4 +454,4 @@ print("   Created custom dataset class")
 print("   Implemented data augmentation")
 print("   Built data loaders for batching")
 print("   Split data into train/val/test sets")
-print("=" * 60)
+print("")

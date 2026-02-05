@@ -7,9 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.2] - 2026-02-04
+## [0.0.6] - 2025-02-04
 
-**Documentation & Links Fix**
+**License and Author Update**
+
+### Changed
+
+- Changed license from MIT to Apache License 2.0
+- Updated author to Squid Consultancy Group (SCG)
+- Cleaned up all code comments and removed decorative patterns
+- Removed all emojis from codebase and documentation
+- Updated version to 0.0.6 across all files
+
+### Added
+
+- Commercial license notice: Free for educational and academic use, commercial use requires license
+
+---
+
+## [0.0.2] - 2025-02-04
+
+**Documentation and Links Fix**
 
 ### Fixed
 
@@ -23,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.1] - 2026-02-04
+## [0.0.1] - 2025-02-04
 
 **Initial Stable Release**
 
@@ -182,7 +200,7 @@ Complete projects:
 
 ### Infrastructure
 
-- MIT License
+- Apache License 2.0
 - Python 3.8 - 3.13 support
 - NumPy >= 1.19.0 (only required dependency)
 - Type hints throughout codebase

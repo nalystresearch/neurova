@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Dropout, Recurrent, Attention, Embedding, Functional - Placeholders."""
 from neurova.nn.layers import Module
@@ -17,6 +17,6 @@ class Dropout3d(Module):
 class AlphaDropout(Module):
     def __init__(self, p=0.5): super().__init__()
     def forward(self, x): return x
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

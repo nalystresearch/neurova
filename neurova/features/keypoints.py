@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Keypoint detection utilities for Neurova."""
 
@@ -49,6 +49,6 @@ def detect_keypoints(
         kps.append(Keypoint(x=float(x), y=float(y), response=0.0, size=1.0))
 
     return kps
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

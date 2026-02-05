@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Webcam capture for Neurova using system tools (ffmpeg)."""
 
@@ -269,7 +269,7 @@ class WebcamCapture:
             if self._system == "Darwin":
                 hint = (
                     "\n\nmacOS hints:\n"
-                    "- Make sure your terminal/Python has Camera permission in System Settings → Privacy & Security → Camera.\n"
+                    "- Make sure your terminal/Python has Camera permission in System Settings -> Privacy & Security -> Camera.\n"
                     "- Verify the device index with: ffmpeg -f avfoundation -list_devices true -i \"\""
                 )
             raise VideoError(f"failed to open webcam via ffmpeg. {last_err or ''}{hint}")
@@ -450,6 +450,6 @@ class WebcamCapture:
 
 
 __all__ = ["WebcamCapture"]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

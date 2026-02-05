@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 3: Train Face Recognition Model
-======================================
+
 
 This script trains the face recognition model using:
 1. Neurova's FaceTrainer
@@ -138,9 +138,9 @@ def train_model(method: str = 'lbph', augment: bool = True):
         method: Recognition method (lbph, eigenface, fisherface)
         augment: Whether to apply data augmentation
     """
-    print("=" * 60)
+    print("")
     print("STEP 3: TRAIN FACE RECOGNITION MODEL")
-    print("=" * 60)
+    print("")
     
     # Step 1: Load training data
     print("\n Loading training data...")
@@ -246,7 +246,7 @@ def train_model(method: str = 'lbph', augment: bool = True):
 # summary
     print("\n" + "=" * 60)
     print("TRAINING SUMMARY")
-    print("=" * 60)
+    print("")
     print(f"  Method:           {method.upper()}")
     print(f"  Classes:          {len(label_names)}")
     print(f"  Training samples: {len(faces)}")
@@ -254,7 +254,7 @@ def train_model(method: str = 'lbph', augment: bool = True):
     print(f"  Training time:    {train_time:.2f}s")
     print(f"  Train accuracy:   {accuracy:.1f}%")
     print(f"  Model saved:      {model_path}")
-    print("=" * 60)
+    print("")
     
     print("\n Training complete!")
     print("\n Next step: python 04_evaluate_model.py")

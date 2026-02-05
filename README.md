@@ -7,8 +7,8 @@ Most people who work with images and visual data end up in the same repeating cy
 Neurova exists to break that cycle. One install, one namespace, and you can go from raw image to trained model without constantly switching tools or fighting data format mismatches.
 
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/nalystresearch/neurova/blob/main/LICENSE)
-[![PyPI](https://img.shields.io/badge/pypi-v0.0.2-blue.svg)](https://pypi.org/project/neurova/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](https://github.com/nalystresearch/neurova/blob/main/LICENSE)
+[![PyPI](https://img.shields.io/badge/pypi-v0.0.6-blue.svg)](https://pypi.org/project/neurova/)
 
 **Navigation:** [Installation](#installation) · [Quick Start](#quick-start) · [Modules](#modules) · [Built-in Datasets](#built-in-datasets) · [Examples](#examples) · [Documentation](#documentation)
 
@@ -351,9 +351,25 @@ Contributions welcome! See [CONTRIBUTING.md](https://github.com/nalystresearch/n
 
 ## License
 
-MIT License - Copyright (c) 2025 @squid consultancy group (scg)
+Apache License 2.0 - Copyright (c) 2025 Squid Consultancy Group (SCG)
+
+This software is free for educational, academic, and non-commercial use.
+For commercial use, please contact Squid Consultancy Group (SCG) for licensing terms.
 
 See [LICENSE](https://github.com/nalystresearch/neurova/blob/main/LICENSE) for details.
+
+## Trademarks
+
+Neurova is an independent project developed by Squid Consultancy Group (SCG).
+The following are trademarks of their respective owners and are mentioned only
+for compatibility and interoperability purposes:
+
+- TensorFlow® is a trademark of Google LLC
+- PyTorch® is a trademark of Meta Platforms, Inc.
+- OpenCV® is a trademark of OpenCV team
+- CUDA® is a trademark of NVIDIA Corporation
+
+This project is not affiliated with, endorsed by, or sponsored by any of these organizations.
 
 ## Changelog
 

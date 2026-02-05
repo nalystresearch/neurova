@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 2: Prepare Dataset
-========================
+
 
 This script prepares your dataset by:
 1. Scanning all images in data/train/
@@ -197,7 +197,7 @@ def print_dataset_summary(report: dict):
     """
     print("\n" + "=" * 60)
     print("DATASET SUMMARY")
-    print("=" * 60)
+    print("")
     
     print(f"\n Total Persons: {report['total_persons']}")
     print(f" Total Images: {report['total_images']}")
@@ -207,23 +207,23 @@ def print_dataset_summary(report: dict):
         print(f"   {split.capitalize():12} - {data['images']:4} images ({data['persons']} persons)")
     
     print("\n Per-Person Breakdown:")
-    print("-" * 50)
+    print("")
     print(f"{'Person':<20} {'Total':>8} {'Train':>8} {'Test':>8} {'Val':>8}")
-    print("-" * 50)
+    print("")
     
     for person, data in report['persons'].items():
         print(f"{person:<20} {data['total']:>8} {data['train']:>8} {data['test']:>8} {data['validation']:>8}")
     
-    print("-" * 50)
+    print("")
 
 
 def prepare_dataset(split_only: bool = False):
     """
     Main function to prepare dataset.
     """
-    print("=" * 60)
+    print("")
     print("STEP 2: PREPARE DATASET")
-    print("=" * 60)
+    print("")
     
     # Step 1: Scan for images
     print("\n Scanning for images...")

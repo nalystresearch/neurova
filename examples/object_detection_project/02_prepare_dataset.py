@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Step 2: Prepare Dataset
@@ -307,9 +307,9 @@ def prepare_dataset(extract_samples_flag=False):
     Parameters:
         extract_samples_flag: Whether to extract training samples
     """
-    print("=" * 60)
+    print("")
     print("STEP 2: PREPARE DATASET")
-    print("=" * 60)
+    print("")
     
     # Step 1: Load all annotations
     print("")
@@ -419,14 +419,14 @@ def prepare_dataset(extract_samples_flag=False):
     
 # summary
     print("")
-    print("=" * 60)
+    print("")
     print("DATASET SUMMARY")
-    print("=" * 60)
+    print("")
     print("  Total images:   " + str(len(valid)))
     print("  Total objects:  " + str(total_objects))
     print("  Classes:        " + str(len(class_counts)))
     print("  Train/Test/Val: " + str(len(train_set)) + "/" + str(len(test_set)) + "/" + str(len(val_set)))
-    print("=" * 60)
+    print("")
     
     print("")
     print("Dataset preparation complete!")
@@ -448,6 +448,6 @@ if __name__ == "__main__":
     main()
 
 # neurova library
-# Copyright (c) 2025 Neurova Team
-# licensed under the mit license
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

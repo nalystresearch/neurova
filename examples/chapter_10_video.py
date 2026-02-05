@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 10: Video Processing
-=============================
+
 
 This chapter covers:
 - Video capture and reading
@@ -22,9 +22,9 @@ Author: Neurova Team
 import numpy as np
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 10: Video Processing")
-print("=" * 60)
+print("")
 
 import neurova as nv
 
@@ -502,4 +502,4 @@ print("   Computed optical flow (block matching)")
 print("   Controlled frame rate")
 print("   Built video analysis pipeline")
 print("   Created video recording utility")
-print("=" * 60)
+print("")

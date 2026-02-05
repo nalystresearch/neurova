@@ -1,28 +1,79 @@
-# Manifest for package data
+# copyright (c) 2025 @squid consultancy group (scg)
+# all rights reserved.
+# licensed under the mit license.
+
+# manifest for package data
 include README.md
 include LICENSE
-include ARCHITECTURE.md
-include PROJECT_STATUS.md
-include QUICKSTART.md
+include CHANGELOG.md
+include CODE_OF_CONDUCT.md
+include CONTRIBUTING.md
+include SECURITY.md
+include SUPPORT.md
 
-# Include all Python files
+# include all python files
 recursive-include neurova *.py
 
-# Include type stubs
+# include type stubs
 recursive-include neurova *.pyi
 include neurova/py.typed
 
-# Include data files
+# include data files
 recursive-include neurova/data *
 
-# Exclude test files
+# include tflite models for solutions
+recursive-include neurova *.tflite
+recursive-include neurova/solutions/models *.tflite
+recursive-include neurova/face *.tflite
+
+# exclude test files and reports
 recursive-exclude tests *
 recursive-exclude examples *
+exclude test_*.py
+exclude *_test.py
+exclude validate_*.py
+exclude demo_*.py
+exclude quick_test.py
 
-# Exclude build artifacts
+# exclude build scripts and tools
+exclude build_*.sh
+exclude build_*.py
+exclude setup_native.py
+exclude check_*.py
+exclude cleanup_files.py
+exclude feature_audit.py
+
+# exclude documentation (kept in repo only)
+exclude ARCHITECTURE.md
+exclude PUBLISHING.md
+exclude PUBLISHING_STEPS.md
+recursive-exclude docs *
+exclude *_SUMMARY.md
+exclude *_QUICKREF.md
+exclude TASK_COMPLETION_REPORT.md
+exclude CPP_MODULES_COMPLETE.md
+exclude TIMESERIES_CPP_COMPLETE.md
+
+# exclude build artifacts
 global-exclude __pycache__
 global-exclude *.py[cod]
 global-exclude *.so
 global-exclude *.dylib
 global-exclude *~
 global-exclude .DS_Store
+global-exclude .coverage
+global-exclude htmlcov
+
+# exclude project-specific folders
+recursive-exclude scripts *
+exclude my_detection_dataset
+exclude cmake
+exclude src
+exclude include
+exclude proto
+exclude htmlcov
+exclude .pytest_cache
+
+# copyright (c) 2025 @squid consultancy group (scg)
+# all rights reserved.
+# licensed under the mit license.

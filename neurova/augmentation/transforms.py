@@ -1,12 +1,12 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Image transformation classes for data augmentation.
 
 This module provides class-based transforms similar to torchvision.transforms,
-following PyTorch/torchvision conventions for easy integration.
+following standard conventions for easy integration.
 """
 
 import numpy as np

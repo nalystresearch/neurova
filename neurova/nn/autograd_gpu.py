@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 GPU-Accelerated Automatic Differentiation using CuPy.
@@ -148,7 +148,7 @@ class Tensor:
     def __repr__(self) -> str:
         return f"Tensor({self.numpy()}, device='{self.device}', requires_grad={self.requires_grad})"
     
-    # ==================== Arithmetic Operations ====================
+    # Arithmetic Operations
     
     def __add__(self, other) -> Tensor:
         """Addition with broadcasting."""
@@ -403,6 +403,6 @@ if HAS_CUDA:
         print(f"   CuPy version: {cp.__version__}")
     except:
         print("   GPU detection failed")
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

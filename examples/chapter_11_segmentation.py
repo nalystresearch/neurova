@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 11: Image Segmentation with Neurova
-=============================================
+
 
 This chapter covers:
 - Thresholding methods (binary, Otsu)
@@ -21,9 +21,9 @@ Author: Neurova Team
 import numpy as np
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 11: Image Segmentation")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import datasets, core
@@ -272,4 +272,4 @@ print("   Used K-Means for color segmentation")
 print("   Performed multi-scale segmentation")
 print("   Computed region statistics")
 print("   Built complete segmentation pipeline")
-print("=" * 60)
+print("")

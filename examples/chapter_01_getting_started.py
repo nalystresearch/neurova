@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 1: Getting Started with Neurova
-========================================
+
 
 This chapter covers:
 - Installation and setup
@@ -19,9 +19,9 @@ Author: Neurova Team
 import numpy as np
 
 # 1.1 basic imports
-print("=" * 60)
+print("")
 print("Chapter 1: Getting Started with Neurova")
-print("=" * 60)
+print("")
 
 import neurova as nv
 
@@ -72,7 +72,7 @@ data_dir = Path(__file__).parent.parent / "neurova" / "data" / "sample-images"
 sample_img = np.random.randint(0, 255, (100, 100, 3), dtype=np.uint8)
 print(f"    Created sample image: shape={sample_img.shape}, dtype={sample_img.dtype}")
 
-# Convert to grayscale using nvc (OpenCV-compatible API)
+# Convert to grayscale using nvc (standard API)
 gray = nv.nvc.cvtColor(sample_img, nv.nvc.COLOR_RGB2GRAY)
 print(f"    Grayscale image: shape={gray.shape}")
 
@@ -107,4 +107,4 @@ print("   Configured device (CPU/GPU)")
 print("   Created arrays")
 print("   Loaded and processed images")
 print("   Used device context manager")
-print("=" * 60)
+print("")

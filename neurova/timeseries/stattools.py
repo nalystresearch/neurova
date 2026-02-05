@@ -1,11 +1,11 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 # -*- coding: utf-8 -*-
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Statistical tests and functions for time series analysis."""
 
@@ -134,7 +134,7 @@ def adfuller(
     x_lag = x[:-1]
     
     # build regression matrix
-    # �x_t = α + β*t + �*x_{t-1} + δ_1*�x_{t-1} + ... + δ_p*�x_{t-p} + ε_t
+    # x_t = α + β*t + *x_{t-1} + δ_1*x_{t-1} + ... + δ_p*x_{t-p} + ε_t
     
     # use simplified approach with lag 1
     lag = min(maxlag, 1)
@@ -240,6 +240,6 @@ def ljung_box(x: np.ndarray, lags: int = 10) -> tuple[np.ndarray, np.ndarray]:
 
 
 __all__ = ["acf", "pacf", "adfuller", "ljung_box", "ADFResult"]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

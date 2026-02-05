@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.imgproc.threshold - Thresholding functions
@@ -323,6 +323,6 @@ __all__ = [
     "ADAPTIVE_THRESH_MEAN_C",
     "ADAPTIVE_THRESH_GAUSSIAN_C",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

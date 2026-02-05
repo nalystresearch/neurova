@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Edge detection operations for Neurova."""
 
@@ -228,6 +228,6 @@ def _hysteresis(img: np.ndarray, *, weak_value: int, strong_value: int) -> np.nd
 
     out[out != strong] = 0
     return out
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

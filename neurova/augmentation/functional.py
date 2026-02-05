@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Functional API for image augmentation operations.
@@ -918,7 +918,7 @@ def gaussian_blur(
         kernel_size = (kernel_size, kernel_size)
     
     if sigma is None:
-        # PyTorch formula for default sigma
+        # standard formula for default sigma
         sigma = [(k - 1) / 4 for k in kernel_size]
     elif isinstance(sigma, (int, float)):
         sigma = (sigma, sigma)

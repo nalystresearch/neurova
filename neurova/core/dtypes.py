@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Data type definitions and utilities for Neurova"""
 
@@ -142,6 +142,6 @@ uint8 = DataType.UINT8
 uint16 = DataType.UINT16
 float32 = DataType.FLOAT32
 float64 = DataType.FLOAT64
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 8: Neural Networks with Neurova
-=========================================
+
 
 This chapter covers:
 - Neural network layers
@@ -23,9 +23,9 @@ Author: Neurova Team
 import numpy as np
 from pathlib import Path
 
-print("=" * 60)
+print("")
 print("Chapter 8: Neural Networks with Neurova")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import datasets
@@ -382,4 +382,4 @@ print("   Trained a model with gradient descent")
 print("   Evaluated model accuracy")
 print("   Saved and loaded model weights")
 print("   Created custom Module classes")
-print("=" * 60)
+print("")

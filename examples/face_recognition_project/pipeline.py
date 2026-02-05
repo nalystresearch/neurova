@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Complete Pipeline: Face Recognition
-=====================================
+
 
 This script runs the complete face recognition pipeline:
 1. Collect faces (optional)
@@ -47,9 +47,9 @@ def run_pipeline(
         skip_webcam: Skip webcam test
         skip_eval: Skip evaluation
     """
-    print("=" * 70)
+    print("")
     print("        NEUROVA FACE RECOGNITION PIPELINE")
-    print("=" * 70)
+    print("")
     
     steps = []
     if collect_name:
@@ -70,7 +70,7 @@ def run_pipeline(
     if collect_name:
         print("\n" + "=" * 70)
         print("PIPELINE STEP 1/5: COLLECT FACES")
-        print("=" * 70)
+        print("")
         
         from importlib import import_module
         collect_module = import_module("01_collect_faces")
@@ -81,7 +81,7 @@ def run_pipeline(
     # Step 2: Prepare dataset
     print("\n" + "=" * 70)
     print("PIPELINE STEP 2/5: PREPARE DATASET")
-    print("=" * 70)
+    print("")
     
     from importlib import import_module
     prepare_module = import_module("02_prepare_dataset")
@@ -100,7 +100,7 @@ def run_pipeline(
     # Step 3: Train model
     print("\n" + "=" * 70)
     print("PIPELINE STEP 3/5: TRAIN MODEL")
-    print("=" * 70)
+    print("")
     
     train_module = import_module("03_train_model")
     train_module.train_model(method=method, augment=True)
@@ -109,7 +109,7 @@ def run_pipeline(
     if not skip_eval:
         print("\n" + "=" * 70)
         print("PIPELINE STEP 4/5: EVALUATE MODEL")
-        print("=" * 70)
+        print("")
         
         eval_module = import_module("04_evaluate_model")
         eval_module.evaluate_model(method=method)
@@ -118,7 +118,7 @@ def run_pipeline(
     if not skip_webcam:
         print("\n" + "=" * 70)
         print("PIPELINE STEP 5/5: TEST WITH WEBCAM")
-        print("=" * 70)
+        print("")
         
         response = input("\n Start webcam test? (y/n): ")
         if response.lower() in ['y', 'yes']:
@@ -130,7 +130,7 @@ def run_pipeline(
 # final summary
     print("\n" + "=" * 70)
     print("                    PIPELINE COMPLETE!")
-    print("=" * 70)
+    print("")
     
     print("\n Generated Files:")
     

@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.core.ops - Core array operations
@@ -1489,6 +1489,6 @@ __all__ = [
     "BORDER_WRAP", "BORDER_REFLECT_101", "BORDER_DEFAULT",
     "BORDER_TRANSPARENT", "BORDER_ISOLATED",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

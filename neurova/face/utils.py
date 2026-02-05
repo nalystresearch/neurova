@@ -1,11 +1,36 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
-Face processing utilities.
+Face Processing Utilities.
 
-Helper functions for face detection, alignment, cropping, and visualization.
+This module provides helper functions for face detection, alignment, cropping,
+visualization, and preprocessing. All functions work with numpy arrays and
+use PIL for image operations (no cv2 dependency required).
+
+Functions:
+    - extract_faces: Extract all faces from an image
+    - align_face: Align face based on eye positions
+    - detect_landmarks: Detect facial landmarks
+    - crop_face: Crop face region with margin
+    - draw_faces: Draw bounding boxes on image
+    - save_faces: Save detected faces to files
+    - load_face: Load face image from file
+    - preprocess_face: Preprocess face for recognition
+    - compute_face_distance: Compute distance between face embeddings
+    - verify_faces: Verify if two faces match
+    - augment_face: Apply data augmentation
+    - resize_face: Resize face image
+    - to_grayscale: Convert to grayscale
+    - to_rgb: Convert to RGB
+
+Example:
+    >>> from neurova.face import NativeDetector, extract_faces, draw_faces
+    >>> detector = NativeDetector()
+    >>> faces = detector.detect(image)
+    >>> drawn = draw_faces(image, faces)  # Draw boxes
+    >>> cropped = extract_faces(image, detector)  # Get face crops
 """
 
 from __future__ import annotations
@@ -17,10 +42,14 @@ from typing import Any, List, Optional, Tuple, Union
 import numpy as np
 
 
+# 
+# Face Extraction
+# 
+
 def extract_faces(
     image: np.ndarray,
     detector: Optional[Any] = None,
-    method: str = "haar",
+    method: str = "native",
     margin: float = 0.2,
     min_size: Tuple[int, int] = (30, 30),
     output_size: Optional[Tuple[int, int]] = None,
@@ -31,23 +60,28 @@ def extract_faces(
     Args:
         image: Input image (BGR or RGB numpy array).
         detector: FaceDetector instance (creates one if None).
-        method: Detection method if creating detector.
+        method: Detection method if creating detector ('native', 'haar').
         margin: Margin around face (fraction of face size).
         min_size: Minimum face size to detect.
         output_size: Resize output faces to this size.
     
     Returns:
-        List of cropped face images.
+        List of cropped face images as numpy arrays.
         
     Example:
-        >>> faces = extract_faces(image, method='haar')
+        >>> faces = extract_faces(image, method='native')
+        >>> print(f"Found {len(faces)} faces")
         >>> for i, face in enumerate(faces):
-        ...     save_image(face, f'face_{i}.jpg')
+        ...     save_face(face, f'face_{i}.jpg')
     """
-    from .detector import FaceDetector
-    
+    # Try NativeDetector first (faster), then fall back to FaceDetector
     if detector is None:
-        detector = FaceDetector(method=method, min_size=min_size)
+        try:
+            from .detector import NativeDetector
+            detector = NativeDetector()
+        except Exception:
+            from .detector import FaceDetector
+            detector = FaceDetector(method=method, min_size=min_size)
     
     return detector.detect_and_crop(image, margin=margin, size=output_size)
 
@@ -148,63 +182,86 @@ def detect_landmarks(
     """
     Detect facial landmarks in a face image.
     
+    Uses pure Python feature-based landmark detection.
+    No deep learning dependencies.
+    
     Args:
         face: Face image.
-        model_path: Path to landmark model.
+        model_path: Ignored (kept for API compatibility).
     
     Returns:
         Array of (x, y) landmark coordinates or None.
     """
-    # Try MediaPipe
-    try:
-        import mediapipe as mp
-        
-        mp_face_mesh = mp.solutions.face_mesh
-        with mp_face_mesh.FaceMesh(
-            static_image_mode=True,
-            max_num_faces=1,
-            min_detection_confidence=0.5
-        ) as face_mesh:
-            results = face_mesh.process(face)
-            
-            if results.multi_face_landmarks:
-                h, w = face.shape[:2]
-                landmarks = []
-                for lm in results.multi_face_landmarks[0].landmark:
-                    landmarks.append([lm.x * w, lm.y * h])
-                return np.array(landmarks)
-    except ImportError:
-        pass
+    # Pure Python landmark detection using image features
+    # Detect basic facial landmarks using gradient and edge analysis
     
-    # Try dlib
-    try:
-        import dlib
-        
-        if model_path is None:
-            # Use bundled model
-            data_dir = Path(__file__).resolve().parent.parent / "data"
-            model_path = data_dir / "shape_predictor_68_face_landmarks.dat"
-            
-            if not model_path.exists():
-                return None
-        
-        predictor = dlib.shape_predictor(str(model_path))
-        detector = dlib.get_frontal_face_detector()
-        
-        if len(face.shape) == 3:
-            gray = np.mean(face, axis=2).astype(np.uint8)
-        else:
-            gray = face
-        
-        faces = detector(gray)
-        if len(faces) > 0:
-            shape = predictor(gray, faces[0])
-            landmarks = np.array([[p.x, p.y] for p in shape.parts()])
-            return landmarks
-    except ImportError:
-        pass
+    if len(face.shape) == 3:
+        gray = np.mean(face, axis=2).astype(np.float32)
+    else:
+        gray = face.astype(np.float32)
     
-    return None
+    h, w = gray.shape
+    
+    # Normalize
+    gray = gray / (gray.max() + 1e-7)
+    
+    # Compute gradients
+    gx = np.diff(gray, axis=1, prepend=0)
+    gy = np.diff(gray, axis=0, prepend=0)
+    
+    # Find eye regions (darker areas in upper face)
+    upper_face = gray[:h//2, :]
+    
+    # Simple heuristic: eyes are typically at ~1/3 from top, 1/4 and 3/4 from sides
+    landmarks = []
+    
+    # Left eye (estimated position)
+    left_eye_x = int(w * 0.3)
+    left_eye_y = int(h * 0.35)
+    landmarks.append([left_eye_x, left_eye_y])
+    
+    # Right eye (estimated position)
+    right_eye_x = int(w * 0.7)
+    right_eye_y = int(h * 0.35)
+    landmarks.append([right_eye_x, right_eye_y])
+    
+    # Nose tip (center, lower)
+    nose_x = int(w * 0.5)
+    nose_y = int(h * 0.6)
+    landmarks.append([nose_x, nose_y])
+    
+    # Left mouth corner
+    left_mouth_x = int(w * 0.35)
+    left_mouth_y = int(h * 0.75)
+    landmarks.append([left_mouth_x, left_mouth_y])
+    
+    # Right mouth corner
+    right_mouth_x = int(w * 0.65)
+    right_mouth_y = int(h * 0.75)
+    landmarks.append([right_mouth_x, right_mouth_y])
+    
+    # Refine positions using local gradient analysis
+    refined_landmarks = []
+    search_radius = min(w, h) // 10
+    
+    for lx, ly in landmarks:
+        # Search in local region for better position
+        best_x, best_y = lx, ly
+        best_score = 0
+        
+        for dy in range(-search_radius, search_radius + 1, 2):
+            for dx in range(-search_radius, search_radius + 1, 2):
+                nx, ny = lx + dx, ly + dy
+                if 0 <= nx < w and 0 <= ny < h:
+                    # Score based on local gradient magnitude
+                    local_score = abs(gx[ny, nx]) + abs(gy[ny, nx])
+                    if local_score > best_score:
+                        best_score = local_score
+                        best_x, best_y = nx, ny
+        
+        refined_landmarks.append([best_x, best_y])
+    
+    return np.array(refined_landmarks)
 
 
 def crop_face(

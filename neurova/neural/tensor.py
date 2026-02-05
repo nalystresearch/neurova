@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Neurova neural: NumPy-first tensors with autograd.
 
@@ -406,6 +406,6 @@ class Tensor:
 
 def tensor(x: ArrayLike, *, requires_grad: bool = False, dtype: Optional[np.dtype] = None) -> Tensor:
     return Tensor.from_array(x, requires_grad=requires_grad, dtype=dtype)
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

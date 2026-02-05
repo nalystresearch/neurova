@@ -1,8 +1,8 @@
 <!--
 Neurova Library
-Copyright (c) 2025 Neurova Team
-Licensed under the MIT License
-@analytics with harry
+Copyright (c) 2026 Neurova Team
+licensed under the apache license 2.0
+@squid consultancy group (scg)
 -->
 
 # Object Detection Project with Neurova
@@ -155,7 +155,7 @@ Edit config.py to change:
 
 <!--
 Neurova Library
-Copyright (c) 2025 Neurova Team
-Licensed under the MIT License
-@analytics with harry
+Copyright (c) 2026 Neurova Team
+licensed under the apache license 2.0
+@squid consultancy group (scg)
 -->

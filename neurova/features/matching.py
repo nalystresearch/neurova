@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.features.matching - Feature Matching
@@ -597,6 +597,6 @@ __all__ = [
     "DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS",
     "DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

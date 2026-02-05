@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Simple Example: Choose GPU or CPU for Any Task
@@ -26,7 +26,7 @@ print("="*70)
 # sTEP 1: CHECK WHAT DEVICES ARE AVAILABLE
 
 print("\n Available Devices:")
-print("-" * 70)
+print("")
 
 if nv.cuda_is_available():
     print(f"GPU Available: {nv.get_device_name()}")
@@ -84,10 +84,10 @@ print(f"Image on device: {nv.get_device()}")
 
 # apply filters (automatically uses selected device!)
 print("\nApplying filters...")
-print(f"  � Gaussian blur... (running on {nv.get_device().upper()})")
+print(f"   Gaussian blur... (running on {nv.get_device().upper()})")
 blurred = nv.filters.gaussian_blur(test_image_device, sigma=2.0)
 
-print(f"  � Sobel edge detection... (running on {nv.get_device().upper()})")
+print(f"   Sobel edge detection... (running on {nv.get_device().upper()})")
 edges = nv.filters.sobel(test_image_device[:, :, 0])
 
 print(f" Image processing completed on {nv.get_device().upper()}")
@@ -117,7 +117,7 @@ for i, frame in enumerate(video_frames_device):
     # process each frame
     gray = frame[:, :, 0]  # Simplified grayscale
     processed.append(gray)
-    print(f"  � Frame {i+1}/10 processed")
+    print(f"   Frame {i+1}/10 processed")
 
 print(f" Video processing completed on {nv.get_device().upper()}")
 
@@ -193,7 +193,7 @@ try:
         loss.backward()
         optimizer.step()
         
-        print(f"  � Epoch {epoch+1}/5 - Loss: {loss.data:.4f}")
+        print(f"   Epoch {epoch+1}/5 - Loss: {loss.data:.4f}")
     
     print(f" DL training completed on {nv.get_device().upper()}")
     
@@ -246,10 +246,10 @@ print(f"""
 You selected: {choice.upper()}
 
 What ran on {choice.upper()}:
-  � Image processing (filters, edge detection)
-  � Video processing (frame processing)
-  � Machine learning (PCA, classification)
-  � Deep learning (neural network training)
+   Image processing (filters, edge detection)
+   Video processing (frame processing)
+   Machine learning (PCA, classification)
+   Deep learning (neural network training)
 
 How to use in your code:
   
@@ -269,10 +269,10 @@ How to use in your code:
 if nv.cuda_is_available():
     print(f"""
 Performance boost with GPU:
-  � Image processing: 15-25x faster
-  � Video processing: 20-50x faster  
-  � Machine learning: 5-20x faster
-  � Deep learning: 15-100x faster
+   Image processing: 15-25x faster
+   Video processing: 20-50x faster  
+   Machine learning: 5-20x faster
+   Deep learning: 15-100x faster
 """)
 else:
     print("""

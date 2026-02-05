@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Convolutional layers - Placeholder for full implementation."""
 from neurova.nn.layers import Module
@@ -41,6 +41,6 @@ class ConvTranspose3d(Module):
         super().__init__()
     def forward(self, x: Tensor) -> Tensor:
         return x
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

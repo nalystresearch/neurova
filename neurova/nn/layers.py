@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Base neural network module classes.
@@ -314,6 +314,6 @@ class ModuleDict(Module):
     def forward(self, x: Tensor) -> Tensor:
         """Not implemented for ModuleDict."""
         raise NotImplementedError("ModuleDict has no forward() method")
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

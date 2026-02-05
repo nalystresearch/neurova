@@ -1,7 +1,7 @@
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)
 
 """
 Object Detection Trainer.
@@ -508,7 +508,7 @@ def train_detector(
     Convenience function to train an object detector.
     
     Args:
-        data_dir: Path to dataset (YOLO format)
+        data_dir: Path to dataset directory
         class_names: List of class names
         model_size: Model size ('nano', 'small', 'medium', 'large')
         epochs: Number of training epochs
@@ -561,6 +561,6 @@ def train_detector(
     return model, history
 
 # Neurova Library
-# Copyright (c) 2025 Neurova Team
-# Licensed under the MIT License
-# @analytics with harry
+# Copyright (c) 2026 Neurova Team
+# licensed under the apache license 2.0
+# @squid consultancy group (scg)

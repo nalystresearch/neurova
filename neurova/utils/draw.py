@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Drawing utilities for Neurova.
 
@@ -275,6 +275,6 @@ def _draw_circle_outline(img: np.ndarray, center: Point, radius: int, color: Col
         if 2 * (err - x) + 1 > 0:
             x -= 1
             err += 1 - 2 * x
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

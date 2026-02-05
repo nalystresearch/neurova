@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Gaussian Process models for regression and classification."""
 
@@ -363,6 +363,6 @@ class GaussianProcessClassifier:
 
 
 __all__ = ["GaussianProcessRegressor", "GaussianProcessClassifier"]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

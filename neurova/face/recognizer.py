@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Face Recognition using multiple methods.
@@ -230,7 +230,7 @@ class LBPHRecognizer:
     """Local Binary Patterns Histograms face recognizer.
     
     Uses Neurova's pure-Python LBP implementation by default.
-    Falls back to OpenCV if available for better performance.
+    Falls back to cv2 if available for better performance.
     """
     
     def __init__(self, threshold: float = 100.0):
@@ -241,7 +241,7 @@ class LBPHRecognizer:
         self._histograms: List[np.ndarray] = []
         self._use_cv2 = False
         
-        # Try OpenCV for performance (optional)
+        # Try cv2 for performance (optional)
         try:
             import cv2
             self._recognizer = cv2.face.LBPHFaceRecognizer_create(
@@ -293,7 +293,7 @@ class LBPHRecognizer:
     def predict_all(self, face: np.ndarray) -> List[Tuple[int, float]]:
         """Get all predictions with scores."""
         if self._use_cv2 and self._recognizer:
-            # OpenCV doesn't support this, so compute manually
+            # cv2 doesn't support this, so compute manually
             pass
         
         hist = self._compute_lbph(face)
@@ -547,7 +547,7 @@ class FisherFaceRecognizer:
 
 
 class EmbeddingRecognizer:
-    """Embedding-based face recognizer using deep learning."""
+    """Embedding-based face recognizer using pure Python feature extraction."""
     
     def __init__(
         self,
@@ -556,25 +556,8 @@ class EmbeddingRecognizer:
     ):
         self.threshold = threshold
         self.model_path = model_path
-        self._embedder = None
         self._embeddings: List[np.ndarray] = []
         self._labels: List[int] = []
-        
-        # Try to load embedding model
-        if model_path:
-            self._load_embedder(model_path)
-    
-    def _load_embedder(self, path: str) -> None:
-        """Load embedding model."""
-        try:
-            import tensorflow as tf
-            self._embedder = tf.keras.models.load_model(path)
-        except ImportError:
-            try:
-                import torch
-                self._embedder = torch.jit.load(path)
-            except ImportError:
-                pass
     
     def train(self, faces: List[np.ndarray], labels: List[int]) -> None:
         """Train by computing embeddings for faces."""
@@ -586,25 +569,64 @@ class EmbeddingRecognizer:
             self._embeddings.append(embedding)
     
     def _compute_embedding(self, face: np.ndarray) -> np.ndarray:
-        """Compute face embedding."""
-        if self._embedder is None:
-            # Fallback: use simple feature extraction
-            # Resize and flatten
-            from PIL import Image
-            pil_img = Image.fromarray(face)
-            pil_img = pil_img.resize((64, 64))
-            flat = np.array(pil_img).flatten().astype(np.float32)
-            return flat / 255.0
+        """
+        Compute face embedding using pure Python feature extraction.
         
-        # Use model
-        import numpy as np
-        face_input = face.astype(np.float32) / 255.0
-        if len(face_input.shape) == 2:
-            face_input = np.stack([face_input] * 3, axis=-1)
-        face_input = np.expand_dims(face_input, 0)
+        Combines multiple feature types:
+        - HOG-like gradient features
+        - LBP-like texture features
+        - Spatial histogram features
+        """
+        from PIL import Image
         
-        embedding = self._embedder(face_input)
-        return np.array(embedding).flatten()
+        # Resize to standard size
+        pil_img = Image.fromarray(face)
+        pil_img = pil_img.resize((64, 64))
+        img = np.array(pil_img).astype(np.float32)
+        
+        # Convert to grayscale if needed
+        if len(img.shape) == 3:
+            gray = np.mean(img, axis=2)
+        else:
+            gray = img
+        
+        gray = gray / 255.0
+        
+        features = []
+        
+        # Feature 1: Gradient histogram (HOG-like)
+        gx = np.diff(gray, axis=1, prepend=0)
+        gy = np.diff(gray, axis=0, prepend=0)
+        mag = np.sqrt(gx**2 + gy**2)
+        angle = np.arctan2(gy, gx)
+        
+        # Compute histogram of gradients in 4x4 cells
+        cell_h, cell_w = 16, 16
+        for i in range(0, 64, cell_h):
+            for j in range(0, 64, cell_w):
+                cell_mag = mag[i:i+cell_h, j:j+cell_w].flatten()
+                cell_angle = angle[i:i+cell_h, j:j+cell_w].flatten()
+                hist, _ = np.histogram(cell_angle, bins=9, range=(-np.pi, np.pi), weights=cell_mag)
+                features.extend(hist / (np.sum(hist) + 1e-7))
+        
+        # Feature 2: LBP-like texture (simplified)
+        lbp = np.zeros_like(gray)
+        for di in [-1, 0, 1]:
+            for dj in [-1, 0, 1]:
+                if di == 0 and dj == 0:
+                    continue
+                shifted = np.roll(np.roll(gray, di, axis=0), dj, axis=1)
+                lbp += (shifted > gray).astype(float)
+        lbp_hist, _ = np.histogram(lbp.flatten(), bins=9, range=(0, 9))
+        features.extend(lbp_hist / (np.sum(lbp_hist) + 1e-7))
+        
+        # Feature 3: Spatial histogram
+        for i in range(0, 64, 16):
+            for j in range(0, 64, 16):
+                cell = gray[i:i+16, j:j+16]
+                features.extend([np.mean(cell), np.std(cell)])
+        
+        return np.array(features, dtype=np.float32)
     
     def predict(self, face: np.ndarray) -> Tuple[int, float]:
         """Predict identity using embeddings."""

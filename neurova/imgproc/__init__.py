@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.imgproc - Image Processing Functions
@@ -238,6 +238,6 @@ __all__ = [
     "GC_INIT_WITH_RECT", "GC_INIT_WITH_MASK", "GC_EVAL", "GC_EVAL_FREEZE_MODEL",
     "GC_BGD", "GC_FGD", "GC_PR_BGD", "GC_PR_FGD",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

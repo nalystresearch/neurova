@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Pooling layers, Normalization, Dropout, Recurrent, Attention, Embedding - Placeholders."""
 from neurova.nn.layers import Module
@@ -37,6 +37,6 @@ class AdaptiveMaxPool1d(Module):
 class AdaptiveMaxPool2d(Module):
     def __init__(self, output_size): super().__init__()
     def forward(self, x): return x
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

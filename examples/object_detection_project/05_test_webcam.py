@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Step 5: Real-Time Webcam Object Detection
-==========================================
+
 
 This script performs real-time object detection using:
 1. Trained custom detector (HOG+SVM or Template)
@@ -55,7 +55,7 @@ def get_color_for_class(class_name):
     r = (h & 0xFF0000) >> 16
     g = (h & 0x00FF00) >> 8
     b = h & 0x0000FF
-    return (b, g, r)  # BGR for OpenCV
+    return (b, g, r)  # BGR format
 
 
 def draw_detections(frame, detections, colors=None):
@@ -196,9 +196,9 @@ def webcam_detection(model_path=None, cascade_type=None, show_fps=True, save_out
     """
     import cv2
     
-    print("=" * 60)
+    print("")
     print("STEP 5: REAL-TIME WEBCAM DETECTION")
-    print("=" * 60)
+    print("")
     
 # determine detection mode
     detector = None
@@ -397,13 +397,13 @@ def webcam_detection(model_path=None, cascade_type=None, show_fps=True, save_out
     
     print("\n" + "=" * 60)
     print("SESSION SUMMARY")
-    print("=" * 60)
+    print("")
     print(f"  Duration:    {elapsed:.1f} seconds")
     print(f"  Frames:      {frame_count}")
     print(f"  Avg FPS:     {avg_fps:.1f}")
     print(f"  Total detections: {total_detections}")
     print(f"  Avg per frame:    {total_detections / max(frame_count, 1):.1f}")
-    print("=" * 60)
+    print("")
     
 # save session report
     report = {

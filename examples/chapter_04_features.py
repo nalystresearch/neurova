@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 4: Feature Extraction
-==============================
+
 
 This chapter covers:
 - Histogram features
@@ -19,9 +19,9 @@ Author: Neurova Team
 
 import numpy as np
 
-print("=" * 60)
+print("")
 print("Chapter 4: Feature Extraction")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import features, datasets, core
@@ -296,4 +296,4 @@ print("   Computed gradient magnitude and direction")
 print("   Extracted statistical features")
 print("   Computed GLCM texture features")
 print("   Constructed comprehensive feature vectors")
-print("=" * 60)
+print("")

@@ -1,10 +1,10 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Chapter 3: Image Filters and Convolutions
-==========================================
+
 
 This chapter covers:
 - Smoothing filters (Gaussian, Mean, Median)
@@ -18,9 +18,9 @@ Author: Neurova Team
 
 import numpy as np
 
-print("=" * 60)
+print("")
 print("Chapter 3: Image Filters and Convolutions")
-print("=" * 60)
+print("")
 
 import neurova as nv
 from neurova import filters, datasets, core
@@ -219,4 +219,4 @@ print("   Applied sharpening filters")
 print("   Detected edges with Sobel, Canny, Laplacian")
 print("   Created custom convolution kernels")
 print("   Applied morphological operations")
-print("=" * 60)
+print("")

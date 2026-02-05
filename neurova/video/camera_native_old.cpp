@@ -1,12 +1,12 @@
-/* copyright (c) 2025 @analytics withharry
+/* Copyright (c) 2026 @squid consultancy group (scg)
  * all rights reserved.
- * licensed under the mit license.
+ * licensed under the apache license 2.0.
  */
 
 /*
  * Neurova Native Camera Capture
  * High-performance camera interface using platform-native APIs
- * Similar architecture to OpenCV's VideoCapture but pure Python-friendly
+ * Similar architecture to cv2's VideoCapture but pure Python-friendly
  */
 
 #include <pybind11/pybind11.h>

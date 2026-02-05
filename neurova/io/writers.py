@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Basic image file writers for Neurova.
 
@@ -344,6 +344,6 @@ def _write_ppm_pgm(path: Path, arr: np.ndarray, fmt: str) -> None:
     with open(path, "wb") as f:
         f.write(header)
         f.write(payload)
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Object Detection Pipeline
-==========================
+
 
 Complete pipeline that runs all steps in sequence:
 1. Annotate images (if needed)
@@ -38,9 +38,9 @@ from config import (
 def print_header(title):
     """Print a section header."""
     print("\n")
-    print("=" * 60)
+    print("")
     print(f"  {title}")
-    print("=" * 60)
+    print("")
 
 
 def check_data_exists():

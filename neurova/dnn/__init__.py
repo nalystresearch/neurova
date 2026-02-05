@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 neurova.dnn - Deep Neural Network module
@@ -195,9 +195,9 @@ class Net:
     
     def _simulate_forward(self, input_blob: np.ndarray) -> np.ndarray:
         """Simulate forward pass for placeholder output."""
-        # For YOLO-like models, return detection format
-        if self._framework == "darknet" or "yolo" in str(self._layer_names).lower():
-            # YOLO output format: [batch, num_detections, 5 + num_classes]
+        # For detection models, return detection format
+        if self._framework == "weights" or "detect" in str(self._layer_names).lower():
+            # Detection output format: [batch, num_detections, 5 + num_classes]
             return np.zeros((1, 100, 85), dtype=np.float32)
         
         # For classification models
@@ -247,7 +247,7 @@ def readNet(model: str, config: str = "", framework: str = "") -> Net:
     """Load a network from model file.
     
     Args:
-        model: Path to model file (.caffemodel, .pb, .onnx, .weights, etc.)
+        model: Path to model file (.prototext, .pb, .onnx, .weights, etc.)
         config: Path to config file (.prototxt, .pbtxt, .cfg, etc.)
         framework: Optional framework name hint
     
@@ -266,14 +266,14 @@ def readNet(model: str, config: str = "", framework: str = "") -> Net:
     
     if framework:
         net._framework = framework.lower()
-    elif ext in ('.caffemodel', '.prototxt'):
-        net._framework = "caffe"
+    elif ext in ('.prototext', '.prototxt'):
+        net._framework = "prototext"
     elif ext in ('.pb', '.pbtxt'):
         net._framework = "neurova_pb"
     elif ext == '.onnx':
         net._framework = "onnx"
     elif ext == '.weights':
-        net._framework = "darknet"
+        net._framework = "weights"
     elif ext in ('.pt', '.pth'):
         net._framework = "neurova_native"
     else:
@@ -293,21 +293,21 @@ def readNet(model: str, config: str = "", framework: str = "") -> Net:
     return net
 
 
-def readNetFromCaffe(prototxt: str, caffeModel: str = "") -> Net:
-    """Load a Caffe network.
+def readNetFromPrototext(prototxt: str, prototextModel: str = "") -> Net:
+    """Load a prototext network.
     
     Args:
         prototxt: Path to .prototxt file
-        caffeModel: Path to .caffemodel file
+        prototextModel: Path to .prototext file
     
     Returns:
         Net object
     """
-    return readNet(caffeModel if caffeModel else prototxt, prototxt, "caffe")
+    return readNet(prototextModel if prototextModel else prototxt, prototxt, "prototext")
 
 
-def readNetFromNeurova(model: str, config: str = "") -> Net:
-    """Load a Neurova model network.
+def readNetFromPB(model: str, config: str = "") -> Net:
+    """Load a PB format network.
     
     Args:
         model: Path to .pb file
@@ -316,7 +316,10 @@ def readNetFromNeurova(model: str, config: str = "") -> Net:
     Returns:
         Net object
     """
-    return readNet(model, config, "neurova_pb")
+    return readNet(model, config, "pb")
+
+# Alias for backward compatibility
+readNetFromNeurova = readNetFromPB
 
 
 def readNetFromONNX(onnxFile: str) -> Net:
@@ -331,17 +334,17 @@ def readNetFromONNX(onnxFile: str) -> Net:
     return readNet(onnxFile, "", "onnx")
 
 
-def readNetFromDarknet(cfgFile: str, darknetModel: str = "") -> Net:
-    """Load a Darknet network (YOLO).
+def readNetFromWeights(cfgFile: str, weightsModel: str = "") -> Net:
+    """Load a weights-based network.
     
     Args:
         cfgFile: Path to .cfg file
-        darknetModel: Path to .weights file
+        weightsModel: Path to .weights file
     
     Returns:
         Net object
     """
-    return readNet(darknetModel if darknetModel else cfgFile, cfgFile, "darknet")
+    return readNet(weightsModel if weightsModel else cfgFile, cfgFile, "weights")
 
 
 def readNetFromNeurovaModel(model: str, isBinary: bool = True) -> Net:
@@ -705,10 +708,11 @@ __all__ = [
     
     # Network loading
     "readNet",
-    "readNetFromCaffe",
-    "readNetFromNeurova",
+    "readNetFromPB",
+    "readNetFromPrototext",
+    "readNetFromNeurova",  # alias for readNetFromPB
     "readNetFromONNX",
-    "readNetFromDarknet",
+    "readNetFromWeights",
     "readNetFromNeurovaModel",
     "readNetFromModelOptimizer",
     
@@ -741,6 +745,6 @@ __all__ = [
     "DNN_TARGET_CUDA",
     "DNN_TARGET_CUDA_FP16",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

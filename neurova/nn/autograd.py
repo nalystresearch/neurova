@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Automatic Differentiation Engine - autograd engine.
@@ -94,7 +94,7 @@ class Tensor:
     def __getitem__(self, idx):
         return Tensor(self.data[idx], requires_grad=self.requires_grad)
     
-    # ==================== Arithmetic Operations ====================
+    # Arithmetic Operations
     
     def __add__(self, other) -> Tensor:
         """Addition: self + other"""
@@ -211,7 +211,7 @@ class Tensor:
         """Right division: other / self"""
         return other * (self ** -1)
     
-    # ==================== Matrix Operations ====================
+    # Matrix Operations
     
     def matmul(self, other: Tensor) -> Tensor:
         """Matrix multiplication."""
@@ -238,7 +238,7 @@ class Tensor:
         """Matrix multiplication: self @ other"""
         return self.matmul(other)
     
-    # ==================== Reduction Operations ====================
+    # Reduction Operations
     
     def sum(self, axis: Optional[int | Tuple[int, ...]] = None, keepdims: bool = False) -> Tensor:
         """Sum of tensor elements."""
@@ -296,7 +296,7 @@ class Tensor:
         out._backward = _backward
         return out
     
-    # ==================== Shape Operations ====================
+    # Shape Operations
     
     def reshape(self, *shape) -> Tensor:
         """Reshape tensor."""
@@ -355,7 +355,7 @@ class Tensor:
         """Transpose (2D only)."""
         return self.transpose()
     
-    # ==================== Activation Functions ====================
+    # Activation Functions
     
     def relu(self) -> Tensor:
         """ReLU activation."""
@@ -410,7 +410,7 @@ class Tensor:
         out._backward = _backward
         return out
     
-    # ==================== Backpropagation ====================
+    # Backpropagation
     
     def backward(self, gradient: Optional[np.ndarray] = None) -> None:
         """
@@ -451,7 +451,7 @@ class Tensor:
         """Zero out the gradient."""
         self.grad = None
     
-    # ==================== Utilities ====================
+    # Utilities
     
     def item(self) -> float:
         """Get scalar value (for 1-element tensors)."""
@@ -508,6 +508,6 @@ def randn(*shape, requires_grad: bool = False) -> Tensor:
 def rand(*shape, requires_grad: bool = False) -> Tensor:
     """Create a tensor with random uniform values."""
     return Tensor(np.random.rand(*shape), requires_grad=requires_grad)
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

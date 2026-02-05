@@ -1,12 +1,12 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
-PyTorch-style DataLoader, Dataset, and Sampler implementations.
+standard-style DataLoader, Dataset, and Sampler implementations.
 
 This module provides a complete data loading pipeline for deep learning,
-compatible with PyTorch's torch.utils.data API.
+compatible with standard data loader API.
 """
 
 import numpy as np
@@ -646,7 +646,7 @@ class _DataLoaderIter:
 
 class DataLoader(Generic[T_co]):
     """
-    PyTorch-style DataLoader for iterating over datasets.
+    standard-style DataLoader for iterating over datasets.
     
     Combines a dataset and a sampler, providing batched iteration.
     
@@ -821,7 +821,7 @@ class ImageFolder(Dataset):
         except ImportError:
             pass
         
-        raise RuntimeError(f"Cannot load image: {path}. Install PIL or OpenCV.")
+        raise RuntimeError(f"Cannot load image: {path}. Install PIL or cv2.")
     
     def __getitem__(self, index: int) -> Tuple[Any, int]:
         path, target = self.samples[index]

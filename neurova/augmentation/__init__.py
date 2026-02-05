@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Data augmentation module for Neurova.
@@ -10,7 +10,7 @@ capabilities similar to torchvision.transforms and albumentations.
 
 Submodules:
     - functional: Low-level transformation functions
-    - transforms: Class-based transforms (PyTorch-style)
+    - transforms: Class-based transforms (standard-style)
     - geometric: Advanced geometric transformations
     - color: Color space and photometric transformations
 

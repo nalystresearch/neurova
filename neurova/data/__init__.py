@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Data files and resources for Neurova
@@ -13,6 +13,12 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+
+# Data directory
+DATA_DIR = Path(__file__).parent
+
+# Pre-trained models
+BLAZE_FACE_MODEL = DATA_DIR / "blaze_face_short_range.tflite"
 
 
 def _find_data_path() -> Path:
@@ -160,6 +166,6 @@ __all__ = [
     "get_hogcascade",
     "list_datasets",
 ]
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

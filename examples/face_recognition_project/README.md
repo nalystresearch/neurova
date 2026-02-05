@@ -6,41 +6,41 @@ Complete guide for face detection and recognition using Neurova library.
 
 ```
 face_recognition_project/
-│
-├── data/                          #  ADD YOUR IMAGES HERE
-│   ├── train/                     # Training images (70%)
-│   │   ├── person_1/              # Create folder for each person
-│   │   │   ├── img_001.jpg
-│   │   │   ├── img_002.jpg
-│   │   │   └── ...
-│   │   ├── person_2/
-│   │   │   ├── img_001.jpg
-│   │   │   └── ...
-│   │   └── person_N/
-│   │
-│   ├── test/                      # Test images (15%)
-│   │   ├── person_1/
-│   │   ├── person_2/
-│   │   └── ...
-│   │
-│   └── validation/                # Validation images (15%)
-│       ├── person_1/
-│       ├── person_2/
-│       └── ...
-│
-├── models/                        # Trained models saved here
-│   └── face_model.pkl
-│
-├── reports/                       # Training/test reports
-│   └── report.json
-│
-├── 01_collect_faces.py           # Step 1: Collect faces from webcam
-├── 02_prepare_dataset.py         # Step 2: Prepare and split dataset
-├── 03_train_model.py             # Step 3: Train face recognition model
-├── 04_evaluate_model.py          # Step 4: Evaluate and generate report
-├── 05_test_webcam.py             # Step 5: Test with live webcam
-├── pipeline.py                   # Complete pipeline (all steps)
-└── README.md                     # This file
+
+ data/                          #  ADD YOUR IMAGES HERE
+    train/                     # Training images (70%)
+       person_1/              # Create folder for each person
+          img_001.jpg
+          img_002.jpg
+          ...
+       person_2/
+          img_001.jpg
+          ...
+       person_N/
+   
+    test/                      # Test images (15%)
+       person_1/
+       person_2/
+       ...
+   
+    validation/                # Validation images (15%)
+        person_1/
+        person_2/
+        ...
+
+ models/                        # Trained models saved here
+    face_model.pkl
+
+ reports/                       # Training/test reports
+    report.json
+
+ 01_collect_faces.py           # Step 1: Collect faces from webcam
+ 02_prepare_dataset.py         # Step 2: Prepare and split dataset
+ 03_train_model.py             # Step 3: Train face recognition model
+ 04_evaluate_model.py          # Step 4: Evaluate and generate report
+ 05_test_webcam.py             # Step 5: Test with live webcam
+ pipeline.py                   # Complete pipeline (all steps)
+ README.md                     # This file
 ```
 
 ##  Quick Start

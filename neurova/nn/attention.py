@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """Attention, Embedding, Functional - Placeholders."""
 from neurova.nn.layers import Module
@@ -20,6 +20,6 @@ class TransformerEncoder(Module):
 class TransformerDecoder(Module):
     def __init__(self, decoder_layer, num_layers): super().__init__()
     def forward(self, x): return x
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.

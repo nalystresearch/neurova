@@ -1,6 +1,6 @@
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
 
 """
 Evaluation metrics for machine learning
@@ -278,6 +278,6 @@ def r2_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     ss_tot = np.sum((y_true - y_true.mean()) ** 2)
     
     return 1 - (ss_res / ss_tot) if ss_tot != 0 else 0.0
-# copyright (c) 2025 @squid consultancy group (scg)
+# copyright (c) 2025 squid consultancy group (scg)
 # all rights reserved.
-# licensed under the mit license.
+# licensed under the apache license 2.0.
