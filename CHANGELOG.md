@@ -7,45 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.6] - 2025-02-04
+## [0.0.6] - 2025-02-05
 
-**License and Author Update**
+**Initial Public Release**
 
-### Changed
+Complete computer vision and deep learning toolkit with GPU acceleration and built-in datasets.
 
-- Changed license from MIT to Apache License 2.0
-- Updated author to Squid Consultancy Group (SCG)
-- Cleaned up all code comments and removed decorative patterns
-- Removed all emojis from codebase and documentation
-- Updated version to 0.0.6 across all files
+### Languages and Technologies
 
-### Added
-
-- Commercial license notice: Free for educational and academic use, commercial use requires license
-
----
-
-## [0.0.2] - 2025-02-04
-
-**Documentation and Links Fix**
-
-### Fixed
-
-- Fixed all documentation links in README.md to use full GitHub URLs for proper rendering on PyPI
-- Links to INSTALLATION.md, QUICKSTART.md, GETTING_STARTED.md, ARCHITECTURE.md, DOCS_INDEX.md now work on PyPI
-- Links to CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, SUPPORT.md, LICENSE, CHANGELOG.md now work on PyPI
-
-### Changed
-
-- Updated version badge to 0.0.2
-
----
-
-## [0.0.1] - 2025-02-04
-
-**Initial Stable Release**
-
-The first stable release of Neurova - a complete computer vision and deep learning toolkit with GPU acceleration and built-in datasets.
+- **Python** - Primary API and high-level interfaces (3.8 - 3.14 support)
+- **C++** - Native performance modules for image processing and detection
+- **CUDA** - GPU acceleration via CuPy backend for NVIDIA GPUs
+- **NumPy** - Core numerical computations
+- **TFLite** - Lightweight neural network inference
 
 ### Features
 
@@ -61,7 +35,8 @@ The first stable release of Neurova - a complete computer vision and deep learni
 #### Computer Vision
 
 - Feature detection (Harris corners, HOG descriptors)
-- Face detection and recognition (Haar, LBP, DNN-based)
+- Face detection and recognition (Haar cascades with native C++ implementation)
+- BlazeFace detector with TFLite inference
 - Template matching
 - Object detection with cascade classifiers
 - Watershed segmentation
@@ -70,141 +45,52 @@ The first stable release of Neurova - a complete computer vision and deep learni
 
 #### Deep Learning
 
-**Neural Network Layers:**
-
-- Linear (fully connected), Conv2D, Conv1D
-- MaxPool2D, AvgPool2D
+- Neural network layers (Linear, Conv2D, Conv1D, MaxPool2D, AvgPool2D)
 - Dropout, BatchNorm, LayerNorm
 - RNN, LSTM, GRU
 - Attention mechanisms, Embedding layers
-
-**Activation Functions:**
-
-- ReLU, LeakyReLU, Sigmoid, Tanh, Softmax, GELU, Swish
-
-**Loss Functions:**
-
-- MSE, CrossEntropyLoss, BCE, Huber Loss
-
-**Optimizers:**
-
-- SGD, Adam, AdamW, RMSprop
-
-**Automatic Differentiation:**
-
-- Tensor class with gradient tracking
-- Reverse-mode automatic differentiation
-- `.backward()` for backpropagation
+- Activation functions (ReLU, LeakyReLU, Sigmoid, Tanh, Softmax, GELU, Swish)
+- Loss functions (MSE, CrossEntropyLoss, BCE, Huber Loss)
+- Optimizers (SGD, Adam, AdamW, RMSprop)
+- Automatic differentiation with gradient tracking
 
 #### Machine Learning
 
-**Classification:**
+- Classification (KNN, Naive Bayes, Decision Trees, Random Forest, SVM)
+- Regression (Linear, Ridge, Polynomial)
+- Clustering (K-Means, DBSCAN, Hierarchical)
+- Dimensionality reduction (PCA, t-SNE)
+- Model evaluation and cross-validation
 
-- K-Nearest Neighbors (KNN)
-- Naive Bayes
-- Decision Trees
-- Random Forest
-- Support Vector Machines (SVM)
+#### 100+ Neural Network Architectures
 
-**Regression:**
-
-- Linear Regression
-- Ridge Regression
-- Polynomial Regression
-
-**Clustering:**
-
-- K-Means
-- DBSCAN
-- Hierarchical/Agglomerative Clustering
-
-**Dimensionality Reduction:**
-
-- PCA (Principal Component Analysis)
-- t-SNE
-
-**Utilities:**
-
-- Train/test split
-- Cross-validation
-- Model evaluation metrics
+- CNN: LeNet, AlexNet, VGG, ResNet, DenseNet, MobileNet, EfficientNet
+- Transformers: BERT, GPT, T5, ViT, Swin Transformer
+- Generative: GAN, WGAN, VAE, DCGAN, StyleGAN, Diffusion models
+- RNN: LSTM, GRU, Seq2Seq, Bidirectional
+- Graph: GCN, GAT, GraphSAGE
+- RL: DQN, PPO, A2C, SAC
 
 #### Built-in Datasets
 
-**Tabular Data:**
-
-- Iris (classification)
-- Boston Housing (regression)
-- Titanic (classification)
-- Diabetes (prediction)
-- Wine (classification)
-
-**Time Series:**
-
-- Air Passengers
-- Daily Temperatures
-- Sunspots
-
-**Clustering:**
-
-- Mall Customers
-- Penguins
-
-**Images:**
-
-- Fashion-MNIST (70,000 images)
-- Sample images (fruits, lena, building, baboon, chessboard, sudoku)
-
-**Cascade Classifiers:**
-
-- Haar cascades (face, eye, body detection)
-- LBP cascades
-- HOG cascades
+- Tabular: Iris, Boston Housing, Titanic, Diabetes, Wine
+- Time Series: Air Passengers, Daily Temperatures, Sunspots
+- Clustering: Mall Customers, Penguins
+- Images: Fashion-MNIST (70,000 images), sample images
+- Cascade classifiers: Haar, LBP, HOG cascades included
 
 #### GPU Acceleration
 
 - Optional CuPy backend for NVIDIA GPU support
-- Global device selection API (`set_device`, `get_device`)
+- Global device selection API
 - Automatic CPU fallback when GPU unavailable
 - 10-100x speedups on compatible hardware
 
-#### Examples
-
-12 comprehensive tutorial chapters:
-
-- Getting Started
-- Image Transforms
-- Filters
-- Features
-- Detection
-- Face Detection/Recognition
-- Machine Learning
-- Neural Networks
-- Datasets
-- Video Processing
-- Segmentation
-- GPU Performance
-
-Complete projects:
-
-- Face Recognition System
-- Object Detection Examples
-
-### Documentation
-
-- README with comprehensive feature overview
-- INSTALLATION guide for all platforms
-- QUICKSTART with complete API reference
-- ARCHITECTURE design document
-- Example chapters with working code
-
-### Infrastructure
+### License
 
 - Apache License 2.0
-- Python 3.8 - 3.13 support
-- NumPy >= 1.19.0 (only required dependency)
-- Type hints throughout codebase
-- PyPI package distribution
+- Free for educational and academic use
+- Commercial use requires license from Squid Consultancy Group (SCG)
 
 ---
 
@@ -212,8 +98,7 @@ Complete projects:
 
 - **PyPI**: https://pypi.org/project/neurova/
 - **GitHub**: https://github.com/nalystresearch/neurova
-- **Documentation**: https://github.com/nalystresearch/neurova/blob/main/DOCS_INDEX.md
 
 ---
 
-Made by @squid consultancy group (scg)
+Copyright 2025 Squid Consultancy Group (SCG)
